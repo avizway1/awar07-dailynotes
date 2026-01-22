@@ -1,0 +1,177 @@
+
+Server = computer = 
+
+Web Server = Computer = We use this to deliver a webpage / content
+App Server / Database Server / Caching Server..
+File Server = Computer = We use this to deliver / store files and serve over internet.
+AV Server = Computer = Scans all computers in the office network
+
+Laptop = Low config hardare = Designed for daily workloads..
+Server = high config hardware = Designed to run always.. Can handle lot of traffic.. 
+
+
+======
+
+AWS = Amazon Web Services
+
+2004 : Chiris Pinkman and Benjamin black.. SQS (Simple Queqe Services).. 
+In 2006 March, AWS oficially launched with Amazon S3 and EC2.. 
+
+Now, as of today they are offering more than 200+ services.. Including Blackchain, AI, Robotics, AR/VR, text-to-speech, IoT, Satilite station.. 
+
+Core Infrastructure Services:
+
+IAM : Identity and access management : User Management
+EC2 : Elastic Compute Cloud : Servers
+RDS : Relational Database Service : Database
+VPC : Virtual Private Cloud : Network
+Route53 : DNS Service 
+S3 : Simple Storage Service : Storage
+CloudWatch : Monitoring
+CloudTrail : Logging
+
+Amazon CEO : Andy jessy
+AWS CEO : Matt Garman
+
+=========
+
+AWS Account Creation : Experience AWS for up to 6 months without cost or commitment
+
+Free Plan: Receive up to $200 USD in credits, Includes free usage of select services.. 
+
+
+AWS Account Creation : 
+
+Step 1 : You should have a valid email address : Root user email address.. One email = 1 aws account..
+
+Provide Email Address : 
+Provide a Valid account name : Yourname, dev, uat, qa, sit, nw, logging, prod
+
+Root User : Highest permissions on AWS account..
+IAM User : We can set limits on user permisisons.. 
+
+Then.. Setup a Strong password.. 
+
+
+Step 2 : Provide Contact inforamtion
+
+Choose as : personal Account,
+provide : Your name, Phone number, Address
+
+Step 3 : provide Payment information 
+
+Enable international Transactions for your card.. Visa, master Card, Amex, RuPay
+
+Note: your Step 2 and Step 3 name/info should match
+
+Step 4 : Identity verification.. 
+
+Choose purpose as "Academic" and "individual" and provide your identity document.
+
+Step 5 : Mobile Verification
+
+Call / SMS verification.. : Enter phone number, choose SMS, and enter the code you received on your mobile..
+
+
+
+Step 6 : Choose Support Plan 
+
+
+1. Account and Billing Related Queries : Billing and account related issues i.e; account activation, Billing dispute.. Query billing.. 
+FREE FOR ALL regardless of SUPPORT PLAN.. 24x7 support Email / Support Center..
+
+2. Technical Assistance : Anything related to aws services : Server launch failed.. Server connection failed.. network issues.. 
+DEPENDS ON THE ACCOUNT's SUPPORT PLAN..
+
+
+
+BASIC SUPPORT PLAN : pricing : FREE... NO TECHNICAL ASSISTANCE FROM AWS.. 
+AWS Docuemntation.. AWS Re:Post..
+
+--
+
+BUSINESS SUPPORT : Minimum recommended plan for production workloads by AWS. 
+$29/month per account.. 24x7 support..
+
+Case Severity: 
+General Guidance : < 24 hrs
+System Impaired : < 12 hrs
+Production System impaired : < 4 hrs
+Production System Down : < 1 hr
+Business/Mission-critical system down : < 30 mins
+
+--
+
+ENTERPRISE SUPPORT PLAN : Starts from 5,000$/Month..	(100 Acc = 1 SP)
+technical Assistance: With in 15 Min.. 
+AWS Sr. Engineer..
+--> Multiple User can create multiple tickets
+--> Dedicated TAM (Technical Account manager).. 
+--> Anually "AWS Operational Reviews" and "Architectural Reviews".. 
+
+--> We can have one support plan for multiple organisational accounts.. 
+
+Case Severity: 
+General Guidance : < 24 hrs
+System Impaired : < 12 hrs
+Production System impaired : < 4 hrs
+Production System Down : < 1 hr
+Business/Missions Critical System down : < 15 min
+
+
+===
+
+UNIFIED OPERATIONS : Starts from 50,000$/Month..	(100 Acc = 1 SP)
+technical Assistance: With in 5 Min.. 
+AWS Sr. Engineer..
+--> Multiple User can create multiple tickets
+--> Dedicated TAM (Technical Account manager).. 
+--> We get "Designated Domain Specialist Engineers" and "Incident Management Engineers"
+--> Critical Workload Review by AWS
+--> 24/7 Proactive monitoring
+--> Anually "AWS Operational Reviews" and "Architectural Reviews".. 
+
+--> We can have one support plan for multiple organisational accounts.. 
+
+Case Severity: 
+General Guidance : < 24 hrs
+System Impaired : < 12 hrs
+Production System impaired : < 4 hrs
+Production System Down : < 1 hr
+Business/Missions Critical System down : < 5 min
+
+
+====
+
+AWS Login URL : aws.com
+
+aws.amazon.com/console
+
+===
+
+After Account creation, Its highly recommended to enable MFA (multi Factor Authentication)
+
+--> Microsoft Authenticator
+--> Google Authenticator
+--> Authy 2-factor Authenticator
+
+--> Physical Devices
+
+--> 
+
+
+Exchange --> DLs.. 
+
+New Email Id request --> Exchange server --> Mail id --> use account create --> lti.aws.p1@ltimindtree (6 members)
+
+AWS organisation --> AWS Central billing --> p.o --> Bill 
+
+
+
+
+
+
+
+
+
+
