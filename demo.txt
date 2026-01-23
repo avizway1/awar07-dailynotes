@@ -167,6 +167,72 @@ New Email Id request --> Exchange server --> Mail id --> use account create --> 
 AWS organisation --> AWS Central billing --> p.o --> Bill 
 
 
+=======
+
+
+IAM : Identity and access management : User Management
+EC2 : Elastic Compute Cloud : Servers
+RDS : Relational Database Service : Database
+VPC : Virtual Private Cloud : Network
+Route53 : DNS Service 
+S3 : Simple Storage Service : Storage
+CloudWatch : Monitoring
+CloudTrail : Logging
+
+
+Region : No technical definition for this region.. Its just a geographical location or physical location.. 
+39 Geographic Regions as of jan, 2026...
+
+Availability Zones / AZs : Data center or combination of multiple DataCenters.. Every region will have multiple AZs for HA purposes.. 123 Availability Zones as of jan, 2026...
+
+Edge location / PoP (point of presence) : 750+ CloudFront POPs.. 
+
+----
+
+Root user: Account owner that performs tasks requiring unrestricted access.. 
+AWS always receommend us to enable MFA for our root account.. 
+We never ever use root credentials for day-to-day workload..
+
+
+Least Privilages Mechanism : provide the only required permisisons to perform his job roles.. No less, no more permissions.. 
+
+
+IAM Create : We can create multiple users in a single aws account.. We can allocate permissions based on candidate's job roles..
+
+DBA : username & password :  provide "RDSFullAccess" permisisons.. 
+NWAdmin : username & password : Provide "VPCFullAccess" permisisons.. 
+
+
+Action 1: AWS always receommend us to enable MFA for our root account
+
+Action 2 : Setup account alias, this eases our login process..
+https://aviz8.signin.aws.amazon.com/console
+
+Action 3 : We need to setup account password polocies for entire AWS account.. 
+Configure the password requirements for the IAM users.
+
+
+Permissions : Comes from Polocies (Set of permissions)
+
+AWS managed polocies			==> next Session
+	--> Job Function
+	--> Based on core service
+Customer managed polocies
+
+
+
+s3admin --> S3FullAccess --> 
+
+
+
+
+
+
+
+
+
+
+
 
 
 
