@@ -203,6 +203,16 @@ DBA : username & password :  provide "RDSFullAccess" permisisons..
 NWAdmin : username & password : Provide "VPCFullAccess" permisisons.. 
 
 
+
+Organisation : CEO --> (He can be part of any deprt. HR, Marketing, Development , Operation, House Keeping)
+
+HR Deprt : 
+Marketing : 
+Dev : Can he recruit a candidate.? : No.. 
+
+
+---- Birth Settings:
+
 Action 1: AWS always receommend us to enable MFA for our root account
 
 Action 2 : Setup account alias, this eases our login process..
@@ -219,18 +229,57 @@ AWS managed polocies			==> next Session
 	--> Based on core service
 Customer managed polocies
 
+s3admin --> Enabled "management console" --> Permissions "S3FullAccess" --> Review and created.. 
+Login and verified his access on resources.
+
+AWS Defaultly follows "Implicit allow" mechanism : 
+
+==============
+
+D: 27/01/2026
+
+In AWS, We have 2 types of accesses.. 
+1. AWS Management console access : Browser, Username, Password and SigninURL
+2. Programatic Access : CLI : AccesskeyID and SecretAccesskey
 
 
-s3admin --> S3FullAccess --> 
+While cretaing user, we have to add permisisons to user. 
+
+Add user to group : Create a group, add permisisons at group level, so that user gets the group level permisisons.. 
+
+Copy permissions : We can copy/replicate existing user permissions by selecting that user. 
+
+Attach policies directly : we can attach required polocies to an IAM user. 
 
 
+Policy : Set of permisisons on our AWS environment. 
+
+AWS managed Policy (based on AWS Services) : AWS provides these polocies, We cannot delete/modify these. Based on avaiable services in AWS, AWS will add/remove these. 
+
+AWS managed - Job Fucntion Policy : AWS provides these polocies, We cannot delete/modify these. Based on avaiable job roles in current market, AWS provided tailermade polocies. You can see multiple services permisisons.. 
+
+Customer Managed : Based on Customer's requirement, He can create required polocies. he has permisisons to modify/delete these. We can maintain versioning as well. 
 
 
+Defualtly, we can add 10 aws managed polocies per user.
+For an IAM user, we can add upto 20 polocies.
 
 
+Example Scenario 1 : I need an IAM user, who has s3 and ec2 full permisisons and iam readonly.
+
+Example Scenario 2 : I have an IAM user, who need all services access in AWS, But not on S3 Service.
+
+Steps : Create a user and allocated Administratoraccess.. verified access inclusing s3 (able to access)
+created a policy that can deny anything on s3 platform and allocated to the user.. This caused Explicit deny and s3 cannot be accessed by this user.
 
 
+Service Name : S3
+Effect : Allow / Deny 
+Resource : limited to specific resources / all
 
+---
+
+https://avizacademy.com/payments.html
 
 
 
