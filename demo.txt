@@ -281,6 +281,71 @@ Resource : limited to specific resources / all
 
 https://avizacademy.com/payments.html
 
+-----
+
+1. Inline Policy
+2. Permisisons Boundary
+3. How to track user activities
+4. Credentials report
+5. How to enable billing access to an IAM user
+6. How to add conditions to the IAM Policies.
+
+
+---
+
+D: 28/01/2026
+
+Inline Policy : it embedded directly into one particular IAM user, group or role.
+Inline policies can be atatched to only ONE identity (user/group/role)..
+Whenever that identity deleted, the policy also deletes automatically.. 
+
+When we use it: Whever any specific use required special permisisons, that we may not use again for other users.. 
+--> We can use this to extend user permisisons whenever permissions limit reached.
+--> ITs hard to track. 
+
+Regular policies (AWS Managed / Job fucntion / Customer Managed) can be attached to multiple users. (Reusable).. 
+
+---
+
+Guardrail : Is a protective control that can prevent us from going beyond a safe limit, even if you try.. 
+
+A permissions boundary is an advanced guardrail mechanism used to limit the maximum permissions for an IAM user/role. If if someone adds more permisisons, it wont take effect.. 
+
+----
+
+How to track an IAM user activity.?
+
+Every single activity we perform in an AWS account, will be tracked and logged by "CLOUDTRAIL".. 
+Enabled by defaultly in every single AWS account.. 
+Defualtly it can store last 90 days activities.!! (We can store more --> s3, cloudwatch)
+
+If you want to track any "global service" activities i.e; IAM, route53, Cloudfront.. You have to verify cloudtrail logs in "N virginia"
+
+----
+
+How to enable billing access to an IAM user.?
+
+--> Login to your aws account as "root" user.. Then navigate to account settings.. Enable "IAM user and role access to Billing information"..
+
+--> Create an IAM --> Admin / billing policies..
+
+----
+
+How to add conditions to the IAM Policies.?
+
+IP Address condition: 
+
+** 
+https://checkip.amazonaws.com/
+
+
+---
+
+
+https://avizacademy.com/payments.html
+
+
+
 
 
 
