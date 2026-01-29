@@ -1,0 +1,98 @@
+
+
+
+EC2 : Elastic Compute Cloud : We cna launch and run servers.. 
+
+
+EC2 is a region specific service..!! Chose a region and stick to it. : ap-south-1
+
+Server : 
+
+On-Prem server provisioning and configuration is time taking process.. in AWS ec2, we cna launch and connect to the server ver very clickly.. ==> Go Global in minutes
+pay-as-you-go : Pay for the instance / server you use. (1 ht -> 1 hr bill)
+
+$$$ --> Server 
+
+Server = box = VM (Virtual Machine) = Instance = Azure VM = gcp compute engine
+
+On-Demand ec2 instances : No contract.. Pay for the usage based on Hourly.. We have flexibility to test lot of configuragtions.. 
+
+
+---
+
+Reserved ec2 instance / RI : We can go with a contract with AWS for 1 yr period or 3 yrs period.. 
+
+Standard RI : We cannot change the configuration during the commited period.. 
+Convertable RI : We can change the configurations during the commited period.. 
+Scheduled RI : For a period, for repeatative workload, we cna choose this type.. ( 1 year ==> Mon-fri / weekly 40 hrs)
+
+Pricing options : 
+Full Upfront : Pay full amount now and get the server.. 
+Partial Upfront : Pay partial amount as one time (varies from 30-60%).. AWS reduses the instance hourly cost.. 
+Based on usage, aws will cost us with redused hourly cost.. 
+No Upfront : No need to pay anything.. pay everything on monthly basis only.. 
+
+--> you can register as seller and sell your instance at lower cost at marketplace. 
+
+---
+
+
+Instance Launch process : 
+
+Step 1 : Allocate tags (name, project, cost center, os)
+
+Step 2 : Choose an AMI (Operating System)
+
+windows, Amazon linux, ubuntu, suse, fedora, debian, kali... 
+
+Step 3 : Instance type (Pre-Configured CPU and Memory combinations)
+
+t3.micro
+
+Step 4 : Create a keypair and store it in a secured location (desktop --> keypair)
+
+
+keypair --> Encryption and decryption with public and private key.. 
+
+PublicKey --> AWS keeps it and locks the instance with public key
+Privatekey --> it downloads automatically when we create a keypair.. If you wqant to connect to ec2 instance, you need to use this to unlock the publickey. 
+
+Step 5 : network Settings
+
+Firewall : Helps to filter the traffic.. 
+
+Linux : SSH protocol (Secure Shell) : Port 22
+Windows : RDP Protocol (Remote Desktop Protocol) : Port 3389
+http : Port 80
+https : Port 443
+
+* Make sure you open SSH for Anywhere for today.. *Dont mention this in your interviews.
+
+Step 6 : Storage ..
+
+EBS : for Storage : Linux min 8 gb
+
+
+
+
+
+Tags : Filtering (Project-1 / Project-2) 
+--> OS Patches (SSM) 
+--> Cost (Cost and Usage Report)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

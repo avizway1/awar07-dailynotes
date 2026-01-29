@@ -338,11 +338,31 @@ IP Address condition:
 ** 
 https://checkip.amazonaws.com/
 
+---
+
+https://avizacademy.com/payments.html
+
+==================
+
+D: 29/01/2026
+
+Credentials Report : We can use this report for house keeping activities i.e; identifying and disabling users whoever not logged into aws account from last 90 days.. TO identify the users whoever not enabled MFA..
+
+Access Analyzer : We can use this report to identify "unused" and "external/ Internal" shared resources..
+
+External access findings: Identify resources shared with an external entity.
+Internal access findings: Identify internal IAM users and roles that can access specific resources.
+Unused access findings: Identify IAM users and roles with unused access.
 
 ---
 
 
-https://avizacademy.com/payments.html
+
+
+
+
+
+
 
 
 
