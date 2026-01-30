@@ -73,20 +73,71 @@ Step 6 : Storage ..
 EBS : for Storage : Linux min 8 gb
 
 
-
-
-
 Tags : Filtering (Project-1 / Project-2) 
 --> OS Patches (SSM) 
 --> Cost (Cost and Usage Report)
 
+=======
+
+D: 30/01/2026
+
+Enable SSH in your laptop.. 
+navigate to Settings > Apps > Apps & features > Optional features, click Add a feature, select OpenSSH Client
+
+=============
+
+Inbuilt CMD
+
+--> navigate to the folder, click on navigation bar --> type "cmd" --> click enter.. verify keypair (dir) --> 
+
+ssh -i <your-keypair-name.pem> <user-name>@<public-ip>
+
+ssh -i keypair.pem ec2-user@202.152.23.23
+
+ssh -i "awar07-kp.pem" ec2-user@ec2-52-66-243-120.ap-south-1.compute.amazonaws.com
+
+============
+
+git
+
+Navigate to the locaiton you have your keypair.. right click and choose "Open git bach here" and use the same ssh comamnd to connect..
+
+ssh -i "awar07-kp.pem" ec2-user@ec2-52-66-243-120.ap-south-1.compute.amazonaws.com
+
+
+===========
+
+Putty: (Putty dont support .pem format directly)
+We have 2 options..
+Option 1 : Create a .ppk while launching your ec2 instance
+Option 2 : Convert .pem to .ppk and use it
+
+
+=======
+
+MAC: WARNING: UNPROTECTED PRIVATE KEY FILE
+
+chmod 400 <keypair-name>
+
+
+WINDOWS : WARNING: UNPROTECTED PRIVATE KEY FILE
+
+
+icacls your-keypair.pem
+icacls your-keypair.pem /inheritance:r				--> Remove inheritance permissions
+icacls your-keypair.pem /grant:r "$($env:USERNAME):(R)"		--> grant read permisisons only your working user
+icacls your-keypair.pem
+whoami			--> identify your username
+
+icacls your-keypair.pem /remove "Users"
+icacls your-keypair.pem /remove "Everyone"
+icacls your-keypair.pem /remove "Authenticated Users"
+
+==========
 
 
 
-
-
-
-
+https://avizacademy.com/payments.html
 
 
 
