@@ -1,0 +1,114 @@
+
+
+linux : Opensource OS designed based on Unix architecture.
+
+linux torwalds
+
+Open Source : Free to use, Free modify, free to distribute.. 
+Security : Reobust security against malwares, viruses due to strong permissions and active community updates.
+Servers, Databases and mission critical worklaods i.e; satilites..
+Cost : No licensing fees
+Cross-Platform : it can run on various hardware configurations.. embedded devices / supercomputers.. 
+
+Linux Distributions:
+
+general usage : ubuntu, fedora, linux mint, Debian
+Enterprise : RHEL (redhat enterprise linux), SUSE linux, Oracle Linux
+Community : CentOS, almaLinux
+Penetration testing: kali linux, parrot os
+Lightweight linux: alpine, bookwarm, Puppy linux, lubuntu
+
+/ : root directory
+
+Top level directlry, the parent of all other directory.. Everything starts here..
+(Simialr to c:/)
+
+/root : Root user's home directory.. Each user we create in Linux os, will get a home directory.. 
+(Similar to C:\Users\Administraor)
+
+/home : The home directory for regular users.. (non-root)
+(Similar to C:\User\<avinash>/<test>)
+
+/bin : Binary Executables :
+Contains essential binary files used by all users (eg: ls, cp, mv)
+comands in /bin are available in single-user mode and are critical system operations.
+
+/boot: Boot loader files : Contains linux kernel, boot configurations and boot related files.
+
+/dev : Device files : Contains files that represent hardware devices like hard disks. 
+( /dev/sda, /dev/sdx)..
+(Windows : Device manager)
+
+/etc : Configuration files : Stores system wide configurations (i.e; /etc/passwd, /etc/resolv.conf)
+** Contains imp system settings and service management
+
+/usr : user Programs : Contains user level programs and libraries.
+(windows: c:\Program Files)
+
+/var : Variables Files : Contains data that changes freq.. (logs, database, webserver content)
+
+/tmp : Temporary directory
+
+/mnt : Mount points : Temp mount points..
+/media : Removable media
+/proc : process infroamtion : A virtual directory contains system informaiton i.e; RAM, CPU.. 
+/opt : Optional Software : optional 3rd party softwre
+lib/lib64 : Library files : (windows .dll).. contains essential shared libraries..
+
+================================
+
+
+Windows = Folder
+Linux = Directory
+
+cat /etc/os-release					--> Shows detailed OS information
+
+hostname							--> Displays the systems name
+
+uptime								--> Shows how long system is up and running, including users session count
+uptime -p
+
+man <command>						--> Shows manual/info related to the command we difine.
+man ls
+man pwd
+man cp
+
+history
+
+---
+
+ls							--> List files & directories in the current path
+ls -a						--> list everything inclusing hidden
+ls -ll						--> Long list 
+ls -l						--> 
+ls -la						--> List include hidden directories
+
+cd 							--> Change Directory
+cd ..						--> Moves up one directory level
+
+cd .ssh
+
+cat							--> Displays the entire content of the file
+more 						--> Displays the file content page by page.
+
+touch 						--> Helps to create a zero byte empty file
+touch avinash.txt
+
+touch avi{1..3}.txt			--> avi1.txt, avi2.txt avi3.txt
+
+mkdir 						--> make a directory (create a folder)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
