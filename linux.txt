@@ -98,11 +98,108 @@ touch avi{1..3}.txt			--> avi1.txt, avi2.txt avi3.txt
 
 mkdir 						--> make a directory (create a folder)
 
+which <ls>					--> shows binary files location
 
 
+mkdir <dir-name>			--> Creates a directory
 
 
+Copy Paste: cp
 
+cp							--> Command to perform copy and paste
+cp file1.txt folder/
+cp -R <Dir-1> <Dir-2>		--> Copy the directory to another directory
+
+Cut Paste : mv
+
+mv file.txt <directory>		--> Cut the file from source location and paste in destination directory
+mv <Dir-1> <Dir-2>			
+
+Same MV command can be used for "rename" operation aswell.
+
+mv wrongname.txt validname.txt
+ 
+========
+
+D: 03/02/2026
+
+
+rm 							--> Is to delete the individual file
+rm file.txt
+
+rm s*						--> Delete all the files name starts with "s"
+
+rmdir						--> Deletes the empty directory
+
+rm -r <DIR-NAME>			--> Deletes the non empty directory
+
+rm -rf <DIR-NAME>			--> Deletes the directory forcefully
+
+rm -rf *					--> Deletes everything from current location
+
+cat 						--> Displays all the file content
+more						--> Displays the file content page by page (space bar)
+
+head passwd					--> Displays top 10 lines only
+tail passwd					--> Displays last 10 lines only
+
+
+head -n 2 passwd				--> Displays top 2 lines only
+tail -n 2 passwd				--> Displays last 2 lines only
+
+sort passwd						--> Sort the file
+sort -r passwd					--> Reverse sort
+
+grep : Global Regular expression print : helps to search text within files.
+
+
+grep "root" passwd					--> Look for "root" and displays that lines content
+
+grep -i "ROOT" passwd 				--> Insensitive : Search for "root", "Root", "ROOT"
+
+grep "word" file1.txt file2.txt
+
+grep -r "word" /path
+
+grep -r "word" /home/ec2-user		--> Searches the entire directory for the given "word"
+
+ps aux | grep "ec2-user"			--> Filters the output of ps aux to show lines that matching with the given word
+
+
+===========
+
+vim : Vi Improved : text editor for Linux Operating system.. 
+
+vi : The original editor..
+vim : Enhanced / modified vi editor.. 
+
+vim a.txt
+
+VIM has 2 modes:
+
+Command Mode: used for navigation, deletion and other file operations i.e; line numadd
+Insert Mode: Used for Entering the text into the file we opened.
+
+Command mode --> Insert Mode --> Press "i"
+Insert mode --> Command Mode --> Press "esc"
+
+:wq			--> Save and Quit from editor
+:q!			--> Quit without saving 
+
+o 			--> Open a new line at cursor
+x			--> Delete the character 
+
+dw			--> Delete the word from the cursor
+dd			--> Entire line deletes
+3dd			--> From cursor next 3 lines will be deleted
+100dd		--> 100 lines will be deleted
+
+:set number		--> Sets the number for the lines in vim editor
+:set nonumber	--> removes the line number
+
+nG			--> Jumps to the specific line number (replace n with number)
+
+======
 
 
 
