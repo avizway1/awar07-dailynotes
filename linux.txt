@@ -150,8 +150,9 @@ tail -n 2 passwd				--> Displays last 2 lines only
 sort passwd						--> Sort the file
 sort -r passwd					--> Reverse sort
 
-grep : Global Regular expression print : helps to search text within files.
+---
 
+grep : Global Regular expression print : helps to search text within files.
 
 grep "root" passwd					--> Look for "root" and displays that lines content
 
@@ -183,6 +184,7 @@ Insert Mode: Used for Entering the text into the file we opened.
 Command mode --> Insert Mode --> Press "i"
 Insert mode --> Command Mode --> Press "esc"
 
+
 :wq			--> Save and Quit from editor
 :q!			--> Quit without saving 
 
@@ -200,6 +202,95 @@ dd			--> Entire line deletes
 nG			--> Jumps to the specific line number (replace n with number)
 
 ======
+
+D: 04/02/2026
+
+Package Management : 
+
+RPM (Redhat package manager) : Outdated.. Installations, updates and removal of software packages on red-hat based systems.
+--> It has a limitation, Does not resolve dependencies automatically.
+
+install: rpm -ivh package.rpm
+rpm -e package_name
+
+--
+
+YUM (Yellowdog Updater Modified): Its wrapper to RPM, that can resolve dependencies and retrive packages automatically from repositories.
+
+yum update
+yum install <nginx/httpd/mariadb105>
+yum search <package-name>
+yum remove <package-name>
+
+yum install tree				--> Interactive installation
+yum install tree -y				--> Non-Interactive installation
+
+sudo yum install tree -y		--> When working as non-root user i.e; ec2-user
+
+---
+
+DNF (Dandified YUM) : Modern package manager that replaced YUM in newer linux distributions. 
+--> Faster dependency resolutions.
+--> Plugin based architecture
+
+sudo dnf update -y							--> Updates all the packages
+
+sudo dnf install <package-name> -y			--> Installs the package using dnf
+
+
+--> Sometimes, we may not find the required package in default repo available in our OS. We do have option to add service provider's repos. then we can continue with installation.
+ref: https://grafana.com/docs/grafana/latest/setup-grafana/installation/redhat-rhel-fedora/
+
+
+dnf search <package>
+dnf info <packagename>
+dnf remove <package> -y
+dnf list installed
+
+---
+
+sudo dnf install httpd -y
+
+systemctl status httpd				--> To check httpd service status
+systemctl start httpd				--> To start httpd service
+systemctl stop httpd				--> To stop the httpd service
+systemctl restart httpd				--> To restart the httpd service
+
+systemctl enable httpd				--> httpd service starts automatically after restart also.
+
+ERR_CONNECTION_TIMED_OUT : Traffic not reaching ec2 instance
+ERR_CONNECTION_REFUSED : No service available to serve the request.
+
+To serve your own content, Create files and place it under Documentroot path.
+
+DocumentRootPath: http: /var/www/html/
+
+Default httpd port: 80
+
+httpd configuration path: /etc/httpd/conf/
+File Name: httpd.conf
+
+at Line number: 47, you can see LISTEN.. Modify it to desired port.
+
+We need to restart the httpd package, as we perform conf changes. 
+
+http://65.0.86.38:8080/
+
+
+===========
+
+zip songs.zip song1.mp3 song2.mp3 song3.mp3			--> Zip 3 songs into songs.zip file
+zip songs.zip *										--> picks all files and added to zip
+
+zip -r name.zip directoryname/						--> Zip an entire folder inc. subdirectories
+
+unzip songs.zip
+
+--
+
+tar -cavf songs.tar.gz song1.mp3 song2.mp3 song3.mp3	--> create a zip folder with .tar.gz format
+tar -xzvf songs.tar.gz									--> Unzip the directory
+
 
 
 
