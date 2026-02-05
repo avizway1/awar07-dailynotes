@@ -291,8 +291,125 @@ unzip songs.zip
 tar -cavf songs.tar.gz song1.mp3 song2.mp3 song3.mp3	--> create a zip folder with .tar.gz format
 tar -xzvf songs.tar.gz									--> Unzip the directory
 
+============
+
+D: 05/02/2026
 
 
+>		--> Redirecting (Overwrite existing data with new data)
+>> 		--> Appending (Adds new data to existing data)
+
+echo "hello" > greeting.txt
+echo "hello" >> greeting.txt
+
+=======
+
+top : shows realtime view of running processes, system load, CPU and memory usage.
+htop : shows top command output in better way. 
+
+ps		--> Shows the snapshot of current processes
+
+ps aux	--> Shows a detailed list opf processes from all users.
+
+	a : shows process for all users
+	u : shows user/owner of the process
+	x : shows processes not attached to a terminal
+
+ps aux | grep sleep			--> displays sleep related processes
+ps aux | grep httpd
+ps aux | grep sshd
+
+kill <pid>					--> Sends a singal to terminal using process id. (signal 15 / SIGTERM)
+
+kill -9 <pid>				--> Send SIGKILL (signal 9) which forcefully stops the process. 
+**Use this option when "kill" is not working. 
+
+
+We do have other command to identify the process IDs using name.. 
+
+pidof httpd
+pidof sleep
+
+--> we can also use pkill command to kill the process using names.
+
+pkill sleep
+
+
+----
+
+Checks free memory / RAM : free -h
+check free Storage / disk : df -h
+
+free -m		--> Shows memory in mb
+free -s 5	--> run free command for every 5 seconds
+watch -n 2 free -h
+
+**htop gives clearner UI based live usage information.
+
+----
+
+Find a file by name
+
+find / -name <file-name>
+
+sudo find / -name greeting.txt
+
+Make it case insensitive:	sudo find / -iname GReeting.txt
+
+sudo find /home/ec2-user/ -iname GReeting.txt
+
+sudo find . -iname GReeting.txt
+
+--
+
+Search file by file format
+
+Find directories named "logs" in "/"..
+sudo find / -type d -name logs
+
+Find all the files which contains format .logs
+sudo find / -type f -name "*.logs"
+
+---
+
+Install "mlocate" package for quick and easy search option. (latest feature)
+
+sudo dnf install mlocate
+sudo updatedb
+
+locate filename.txt
+
+---
+
+Whenever you are working on multiple linux instances, You may need to copy some data from one machine to another instance. 
+
+We can use "SCP" command.. THis works between linux instances only.. 
+To transfer data from Windows to Linux Instance we can use "winscp" tool..
+
+scp [option] source destination
+
+---
+
+From Local latop to Remote ec2 instance.. 
+
+scp <filename> <username>@<instance-public-ip>:<path>
+
+scp demo.txt ec2-user@13.201.3.223:/home/ec2-user/
+
+TO pass the keypair 
+scp -i <keypair.pem> demo.txt ec2-user@13.201.3.223:/home/ec2-user/
+
+--
+
+TO get a file from ec2 instance to local..
+
+scp -i awar07-kp.pem ec2-user@13.201.3.223:/home/ec2-user/greeting.txt .
+
+---
+
+to transfer a folder using scp
+
+scp -i awar07-kp.pem -r foldername ec2-user@13.201.3.223:/home/ec2-user/greeting.txt .
 
 
 
