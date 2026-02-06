@@ -411,9 +411,116 @@ to transfer a folder using scp
 
 scp -i awar07-kp.pem -r foldername ec2-user@13.201.3.223:/home/ec2-user/greeting.txt .
 
+=============
+
+D: 06/02/2026
 
 
+id	root					--> root always have id as 0
+id ec2-user					--> ec2-user user id is 1000
+
+sudo useradd avinash
+id avinash					--> avinash user id is 1001
+
+sudo passwd avinash			--> sets password for avinash user
+
+su avinash					--> switch to avinash user
 
 
+**Create a user without homedirectory.. Use below commands..
+sudo adduser --no-create-home username
+sudo useradd -M username
+sudo useradd -r username
 
+
+sudo groupadd developers	--> Creates a group named developers
+
+sudo usermod -aG developers avinash		--> Adding avinash to developers group (secondary group for avinash)
+
+sudo gpasswd -d avinash developers		--> Removes the user from group named developers
+
+sudoers file location : /etc/sudoers
+
+We have to use "visudo" command to edit
+
+sudo usermod -aG wheel avinash			--> Adding avinash to wheel group, so, he can use "sudo" to gain admin level permissions..
+
+
+Can i directly login as avinash user to this ec2 instance using avinash cred.
+
+ssh avinash@43.205.178.165
+avinash@43.205.178.165: Permission denied
+
+sshd configuration path: /etc/ssh/sshd_config
+
+sudo vim /etc/ssh/sshd_config
+
+set passwordauthentication to yes
+
+then Restart the service : sudo systemctl restart sshd
+
+---
+
+Linux permisisons Management : 
+
+Octal: 
+4 - read - r
+2 - write - w
+1 - execute - x
+
+7 - 4+2+1 = Read, Write and Execute
+6 - 4+2+0 = Read and Write
+5 - 4+0+1 = Read and Execute
+4 - 4+0+0 = Read Only
+3 - Write and execute
+2 - only write
+1 - only execute
+0 - no permisisons
+
+
+Permisisons are set in theree levels
+
+rwx	r-x	r-x
+u	g	o
+
+u users (owner)
+g group
+o other (world)
+
+chmod 600 file.txt
+chmod 700 file.txt
+
+chmod 400 <keypair>.pem
+
+
+getfacl avinash.txt 
+# file: avinash.txt
+# owner: avinash
+# group: avinash
+user::rwx
+group::rwx
+other::rwx
+
+
+sudo chown avinash file.txt			--> change owner
+sudo chgrp developers file.txt		--> change the group of a file
+sudo chown -R avinash /data			--> Change ownership recirsively
+
+
+sudo adduser avinash
+sudo adduser anudeep
+sudo adduser aravind
+
+sudo groupadd devteam
+sudo groupadd managers
+
+sudo usermod -aG devteam avinash
+sudo usermod -aG devteam anudeep
+sudo usermod -aG managers aravind
+
+verify by inspecting /etc/group file
+
+sudo mkdir /opt/devprojects
+sudo chgrp devteam /opt/devprojects
+sudo chmod 775 /opt/devprojects
 
