@@ -524,3 +524,113 @@ sudo mkdir /opt/devprojects
 sudo chgrp devteam /opt/devprojects
 sudo chmod 775 /opt/devprojects
 
+================================
+
+D: 07/02/2026
+
+ipconfif
+ipconfig /all		--> Shows IP addr information in windows
+
+ifconfig 
+ip addr				--. Shows IP addr inforamtion in Linux
+
+---
+
+netstat
+
+ss -tulnp			--> Lists open ports with associated program name
+
+ss -plnt			--> Check port listen status
+
+ss -plnt | grep 80	--> check http is being used or not.
+
+sudo lsof -i :80	--> check port status and displays addl info (user, pid)
+
+----
+
+telnet : test remote port availability
+
+windows: Open Windows Features: Press the Windows key, type "Turn Windows features on or off", and select the result. In the Windows Features window, scroll down to find "Telnet Client" and install
+
+mac: brew install telnet
+linux : sudo dnf install telnet
+
+
+telnet <IP-Addr> <port>
+
+telnet 65.2.129.138 80
+
+openssl s_client -connect hostname:port
+openssl s_client -connect 65.2.129.138:80
+
+----
+
+DNS and Hostname resolution:
+Name Server lookup : To identify which IP is mapped to Domain name
+
+nslookup google.com
+dig google.com
+host google.com
+
+---
+
+CRON : 
+
+sudo dnf install cronie -y
+sudo systemctl start crond
+
+crontab -e			--> open the file and we can add our jobs
+crontab -l			--> list the jobs
+
+echo 'echo hello >> /home/ec2-user/hello.txt' > /home/ec2-user/hello.sh
+chmod +x /home/ec2-user/hello.sh
+
+* * * * * date >> /home/ec2-user/time.log
+
+*/2 * * * * /home/ec2-user/hello.sh
+
+@daily /home/ec2-user/backup.sh
+
+
+0 0 1 * * reboot		--> every month on 1st at 12:00 reboot command will execute
+
+-----
+
+
+EOF or HEREDOC to Create a file
+
+cat <<EOF > fruits.txt
+apple
+banana
+EOF
+
+---
+
+tee : it takes outpur of a command and writes it to two places at same time.
+
+command | tee filename.txt
+
+ls -l | tee output.txt			--> ls -l output displays here, also, writes output to output.txt file
+
+ls -l | tee output.txt lsoutput.txt 
+
+echo "hello" | sudo tee /etc/test.conf
+
+ping google.com | tee ping.log
+
+---
+
+sed : Stream EDitor.. It helps to edit the files automatically without opening the file.
+
+
+sed 's/old/new/' file.txt
+
+echo "I like apple" | sed 's/apple/banana/'
+
+sed -i 's/old/new/' file.txt
+
+sed '/error/d' file.txt				--> Delete all lines that contains "error" word.
+
+sed -i '/root/hello from sed editor' passwd
+
+
