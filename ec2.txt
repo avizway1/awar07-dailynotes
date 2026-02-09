@@ -135,14 +135,144 @@ icacls your-keypair.pem /remove "Authenticated Users"
 
 ==========
 
+D: 09/02/2026
 
 
-https://avizacademy.com/payments.html
+EBS : Elastic Block Storage : 
+
+SSD : 
+HDD : 
+Magnetic : 
+
+How do we measure storage performance: IOPS (Input and Output operations per second)
+
+Block Size : The size of the data block being read / written. 4 KB / 8 KB
+latency : The time taken to process a single I/O request. (Queue latency and Disk latency)
+Throughput : The rate at which data is transferred, we measure this in MB/S..
+
+IOPS = Throughput x 1024 / Blocksize
+
+128 mb/s
+block size = 4 kb
+IOPS = 128 x 1024 / 4 = 32768 IOPS
+
+---
+
+https://docs.aws.amazon.com/ebs/latest/userguide/ebs-volume-types.html
+
+General Purpose SSD (gp3 / gp2) : Most common workloads.. 
+Low latency
+Min 1 GiB, Max: 16 TiB
+Max IOPS: 16,000
+
+gp2 : 3 IOPS per 1 GiB (1:3 Ratio) but with min of 100 IOPS
+gp3 : Allows us to specify our required iops count. It also supports upto 64 TiB
+
+---
+
+Provisioned IOPS SSD (io1 / io2) : Workload that requires specific IOPS count.. Any workload that needs more than 16,000 IOPS.. Highest performance volume type.. (I/O intensive workload / database)..
+Min: 4 GiB, Max: 16 TiB 	(io2 block express: 64 TiB)
+Max IOPS : 64,000
+
+---
+
+HDD : Dont support to run root volume.. We cant use this type to run os.
+
+Throughput Optimised HDD (st1) : Stuitable for big data, data warehousing and log processing kind of workload..
+Min: 125 giB, max: 16 TiB
+Max Throughput: 500 MB/s
+
+Cold HDD (sc1) : Suitanle for less freq accessed data.
+lower cost than ST1.
+Min: 125 giB, max: 16 TiB
+Max Throughput: 250 MB/s
+
+----
+
+Magnetic (standard) : low cost storage solutions for less freq accessed data.. 
+Min: 1 GiB, max: 1Tib
+
+=========
 
 
 
+lsblk			--> List block based devices
+df -Th			--> Lists the volumes detected/used by OS
+
+In AWS console, create a volume in same AZ as your instance and attach it to ec2 instance.
 
 
+Step 1 : Run "lsblk" command and get the volume name.
+
+nvme1n1
+Full path: /dev/nvme1n1
+
+Does this volume has a valid file system.?
+This is a data manageemtn layer.. organizes, stores, retrives and protects data..
+windows: FAT, NTFS, ReFs
+Linux: ex3, ext4, xfs(widely used) 
+
+
+Step 2 : verify file system presence
+sudo file -s /dev/nvme1n1
+
+data: no file system
+
+Step 3 : written the file system, if no file system available. type: xfs
+sudo mkfs -t xfs /dev/nvme1n1
+
+Step 4 : create a directory to mount the volume
+mkdir newvol
+
+Step 5; Mount the volume to dir
+sudo mount /dev/nvme1n1 newvol/
+
+The above 5 steps, make the volume temp mount, Goes if we reboot the system.. To make it perm mount.. add volume entry to /etc/fstab file
+
+Step 6 : Grab the temp mount entry info from "/etc/mtab" file and write it to "/etc/fstab"
+
+sudo cat /etc/mtab
+
+
+/dev/nvme1n1 /home/ec2-user/newvol xfs rw,seclabel,relatime,attr2,inode64,logbufs=8,logbsize=32k,sunit=8,swidth=8,noquota 0 0
+
+
+sudo vim /etc/fstab
+
+
+=======================
+
+To increase the storage size, Increase the size at aws console first, then os level 
+
+you need a small utility name: xfsprogs
+
+sudo xfs_growfs -d /home/ec2-user/newvol
+
+---
+
+To Increase the room volume partition size.. 
+
+sudo growpart /dev/nvme0n1 1
+
+xfs_growfs -d /
+
+---
+
+You have an unencrypted volume, you are asked to encrypt it.. How can you do it.??
+
+Choose the unencry volume --> Create a snapshot --> From Snapshot, create a volume (enable Encryption)
+
+---------
+
+/dev/nvme2n1
+
+sudo mount /dev/nvme2n1 testvol/
+
+
+zero out the log: 
+sudo xfs_repair -L /dev/nvme2n1
+
+sudo xfs_admin -U generate /dev/nvme2n1
 
 
 
