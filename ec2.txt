@@ -264,15 +264,81 @@ Choose the unencry volume --> Create a snapshot --> From Snapshot, create a volu
 
 ---------
 
-/dev/nvme2n1
+Fix same UUID issue:
 
-sudo mount /dev/nvme2n1 testvol/
-
+sudo mount /dev/nvme2n1 testvol/			--> Error
 
 zero out the log: 
 sudo xfs_repair -L /dev/nvme2n1
 
 sudo xfs_admin -U generate /dev/nvme2n1
+
+==========================================================================================
+
+D: 10/02/2026
+
+Snapshot : backup copy of an EBS volume. 
+
+Snapshots are point in time copies. (If you create a snapshot at 09:30, whatever the files you have in volume at 09:30, only those will be backedup).. 
+
+AWS uses s3 as backend platform for snapshots.
+
+--> Can we see what data we have inside the snapshot.?Ans; no..
+--> AWS uses incremental backup mechanism (in backend).. We just need most recent copy to restore.. multiple copies not required..
+--> If a volume is encrypted, and wif we create a snapshot, snapshot also enabled with encryption defualtly.
+
+--> If any snapshot if encrypted with "default encryption key", we cannot share it with other aws accounts.
+--> If any snapshot if encrypted with "custom encryption key", we can share it with other aws accounts.. but we need to share the encryption key also.
+
+
+/dev/nvme1n1
+
+sudo file -s /dev/nvme1n1
+
+sudo mkfs -t xfs /dev/nvme1n1
+
+mkdir 1avol
+
+sudo mount /dev/nvme1n1 1avol/
+
+
+------------
+
+
+DLM : Data Lifycle Manager : Designed to automate the snapshot creation. Based on environment or org/proj requirement, we configure this. (RTO / RPO)
+
+RTO (Recovery Time Objective)
+Simple Meaning: Your downtime limit.
+The Question: "How long can we afford to be offline?".
+Focus: Recovery speed.
+Example: If your RTO is 2 hours, you must have your systems back up and running within 2 hours of a crash to avoid serious business damage. 
+
+2. RPO (Recovery Point Objective)
+Simple Meaning: Your data loss limit.
+The Question: "How much data can we afford to lose?".
+Focus: Backup frequency.
+Example: If your RPO is 1 hour, you must back up your data at least every hour. If the system crashes, you might lose the last 59 minutes of work, but you won't lose more than an hour
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
