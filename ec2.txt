@@ -320,10 +320,32 @@ Focus: Backup frequency.
 Example: If your RPO is 1 hour, you must back up your data at least every hour. If the system crashes, you might lose the last 59 minutes of work, but you won't lose more than an hour
 
 
+==============
+
+
+D: 11/02/2026
+
+Golden Amazon Machine Image (GAMI) : Custom OS
+
+Base Instance --> httpd, custom web content, user add, password auth enable, tree, 2gb addl volume... --> Checklist --> Reboot and verify --> Sanity check --> Then create a GoldenAMI
 
 
 
 
+
+13.200.251.170
+13.201.13.166		--> Current IP
+
+EIP : Elastic IP Address : We can allocate a dedicated IP Address to instance. 
+In general, if we perform stop and start operqation Instance auto allocated public ip will change.
+
+
+
+We always enbale these 2 options to protect our resources from accidental deletion/stop operations
+Stop Protection : 
+Termination Protection : 
+
+Shutdown behaviour : What should happens to the ec2 instance when we initialise the shuotdown at OS level. Default option is "Stop"..  
 
 
 
