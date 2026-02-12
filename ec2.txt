@@ -330,9 +330,6 @@ Golden Amazon Machine Image (GAMI) : Custom OS
 Base Instance --> httpd, custom web content, user add, password auth enable, tree, 2gb addl volume... --> Checklist --> Reboot and verify --> Sanity check --> Then create a GoldenAMI
 
 
-
-
-
 13.200.251.170
 13.201.13.166		--> Current IP
 
@@ -347,21 +344,89 @@ Termination Protection :
 
 Shutdown behaviour : What should happens to the ec2 instance when we initialise the shuotdown at OS level. Default option is "Stop"..  
 
+==================
+
+D: 12/02/2026
 
 
+EFS : Elstic File system : We cna use efs to provide central storage solution for multiple ec2 instances. 
+We can span efs to multiple AZs ec2 instance also.
+
+EFS works with NFS v4.1 protocol.
+NFS Supports linux OS only, THat means EFS supports only linux Instances.
+For windows, We have another service "FSx", FSx works with SMB (Server Message Block) Protocol.
+
+EFS has unlimited storage.
+No Pre-provisioning required
 
 
+Step 1 : Create a Security group for your ec2 instance
+
+sg-01f2aff5e6ac57dc1 - Web-SG		(Opened port http/80 and ssh/22)
 
 
+Step 2 : First create a SG for EFS. Port : 2029.. Always prefer Option 4
+
+Where we need to open this port.?? 
+Option 1 : Open for everyone (least Secured)		: 0.0.0.0/0
+Option 2 : Open for 2 ec2 instance Private IPs		: web-1 pvt ip & web-2 pvt ip
+Option 3 : Open for entire VPC network				: 172.31.0.0/16
+Option 4 : Open for EC2 instance Security group. (More Secured and AWS suggested best option)**
+Open port 2029 and set destination as "Web-SG"
+
+Option 5 : Attach "Default SG" for your EFS and EC2 instances.. Both can communicate.
+
+--------
+
+#!/bin/bash
+sudo dnf install httpd -y
+sudo systemctl start httpd
+sudo systemctl enable httpd
+
+DocumentRootPath: /var/www/html/
+
+----
+
+sudo mount -t nfs4 -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport fs-0d0e78183133de983.efs.ap-south-1.amazonaws.com:/ /mount-point
+
+sudo mount -t nfs4 -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport fs-0d0e78183133de983.efs.ap-south-1.amazonaws.com:/ /var/www/html/
 
 
+ec2 : NFS..??? SSH..?? HTTP..??
+EFS : 2049.. 
+
+---
 
 
+Scaling : 
+
+Vertical Scaling : Adding more resources/components (CPU/memory/ENI) to existing instance.. 
+
+t3.micro		--> Not working as expected --> Cloudwatch --> t3.micro --> t3.small
+
+--> We need to stop the ec2 instance to perform vertical scaling.
 
 
+--> Change Request / CRQ --> CAB meeting (Change Advisory Board) (Prod --> 1 week / Non-prod --> 2 week)
 
+Dev / QA / SIT --> We can do it (1 week observe)
+UAT --> CAB --> 
+PRD --> CAB --> UAT CRQ Number --> prod Approve (2 weeks gap)
 
+e-crq --> Emergency crq 
 
+Is this implemnted in lower env.?
+Cost change
+Downtime required
+Client informed
+change window / When you planning perform
+Pre-Implementation
+Actual implementation
+Post-Implementation
+Validations / Sanity Check
+Rollback plan
+
+Tasks list : db, support, db, aws..
 
 
 
