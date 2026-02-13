@@ -371,9 +371,10 @@ Where we need to open this port.??
 Option 1 : Open for everyone (least Secured)		: 0.0.0.0/0
 Option 2 : Open for 2 ec2 instance Private IPs		: web-1 pvt ip & web-2 pvt ip
 Option 3 : Open for entire VPC network				: 172.31.0.0/16
-Option 4 : Open for EC2 instance Security group. (More Secured and AWS suggested best option)**
-Open port 2029 and set destination as "Web-SG"
 
+Option 4 : Open for EC2 instance Security group. (More Secured and AWS suggested best option)**
+Open port 2029 and set destination as "Web-SG" (Pipeline Mechanism)
+ 
 Option 5 : Attach "Default SG" for your EFS and EC2 instances.. Both can communicate.
 
 --------
@@ -427,6 +428,61 @@ Validations / Sanity Check
 Rollback plan
 
 Tasks list : db, support, db, aws..
+
+====================================
+
+D: 13/02/2026
+
+Cloudwatch : Monitoring service.. Observability (o11y).. 
+This is enabled for most of the aws services we use.. 
+
+
+we have 2 types of monitorings.
+
+1. Basic Monitoring : 5 min
+2. Detailed monitoring : 1 Min
+
+EC2 : We can monitor CPU, Disk and Network metrics.. We cannot monitor "memory/RAM" usage using default cloudwatch metrics.. 
+
+We can install "CW Agent" inside ec2 instance and we can monitor memory and disk free space.. 
+
+--> We can configure alarm based on the metrics and we can invoke services i.e; SNS (simple notification service) or we can take automated actions on the resources.. 
+
+CPU >=90 for 300 seconds --> reboot
+CPU <=20 for 300 seconds --> stop
+
+To monitor memory usage or storage (free storage) or to get our application logs from ec2 to aws.. We need to install Cloudwatch agent.. 
+
+
+----
+
+
+server1
+vpc {172.31.0.0/16} web-sg (80,22)  - 0.0.0.0
+
+
+server2
+vpc {172.31.0.0/16} web-sg (80,22) -  0.0.0.0
+
+
+
+EFS
+
+vpc {172.31.0.0/16} efs-sg (2049) -  web-sg					--> EFS 2 Servers can access
+
+vpc {172.31.0.0/16} efs-sg (2049) -  172.31.0.0/16			--> 65531 Servers.. 
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
