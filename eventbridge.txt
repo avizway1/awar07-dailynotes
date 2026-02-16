@@ -6,3 +6,128 @@
     "eventName": ["CreateUser", "DeleteUser"]
   }
 }
+
+---
+
+{"version":"0","id":"123c2de1-2ce3-72c2-59c8-fd63df2753d2","detail-type":"AWS API Call via CloudTrail","source":"aws.iam","account":"982424467695","time":"2025-11-26T00:41:08Z","region":"us-east-1","resources":[],"detail":{"eventVersion":"1.11","userIdentity":{"type":"IAMUser","principalId":"AIDA6JPIPXDX223OPBHJU","arn":"arn:aws:iam::982424467695:user/Avinash_T","accountId":"982424467695","accessKeyId":"ASIA6JPIPXDX365EK3QG","userName":"Avinash_T","sessionContext":{"attributes":{"creationDate":"2025-11-25T17:06:59Z","mfaAuthenticated":"true"}}},"eventTime":"2025-11-26T00:41:08Z","eventSource":"iam.amazonaws.com","eventName":"CreateUser","awsRegion":"us-east-1","sourceIPAddress":"124.123.165.74","userAgent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36","requestParameters":{"userName":"new2"},"responseElements":{"user":{"path":"/","userName":"new2","userId":"AIDA6JPIPXDXS3JLKQWFK","arn":"arn:aws:iam::982424467695:user/new2","createDate":"Nov 26, 2025, 12:41:08 AM"}},"requestID":"3b652651-7d51-401e-8564-644513fc04f6","eventID":"3905458a-088f-4fd6-ba2e-48a6ca9eb273","readOnly":false,"eventType":"AwsApiCall","managementEvent":true,"recipientAccountId":"982424467695","eventCategory":"Management","tlsDetails":{"tlsVersion":"TLSv1.3","cipherSuite":"TLS_AES_128_GCM_SHA256","clientProvidedHostHeader":"iam.amazonaws.com"},"sessionCredentialFromConsole":"true"}}
+
+---
+
+{
+  "eventName": "$.detail.eventName",
+  "userName": "$.detail.requestParameters.userName",
+  "actor": "$.detail.userIdentity.userName",
+  "ip": "$.detail.sourceIPAddress",
+  "time": "$.detail.eventTime",
+  "account": "$.account",
+  "region": "$.region"
+}
+
+
+---
+
+
+{"message": "IAM user event: <eventName> Account: <account> Region: <region> User affected: <userName> Performed by: <actor> Source IP: <ip> Time (UTC): <time>"}
+
+
+=========================
+Instance Related
+=========================
+
+{
+  "version": "0",
+  "id": "f5c858ea-a6d2-28b8-1b83-3f529c2b36aa",
+  "detail-type": "EC2 Instance State-change Notification",
+  "source": "aws.ec2",
+  "account": "828477980115",
+  "time": "2025-06-24T02:40:03Z",
+  "region": "ap-south-1",
+  "resources": [
+    "arn:aws:ec2:ap-south-1:828477980115:instance/i-04471d034968885a8"
+  ],
+  "detail": {
+    "instance-id": "i-04471d034968885a8",
+    "state": "stopping"
+  }
+}
+
+---
+
+// Input Path
+
+{
+    "time": "$.time",
+    "instance-id": "$.detail.instance-id",
+    "state": "$.detail.state",
+    "region": "$.region"
+}
+
+
+// Input Template
+
+"At <time>, Status of my ec2 instance <instance-id> is changed state to <state> in <region> Act fast"
+
+
+======
+Open port check
+======
+
+{
+  "source": ["aws.ec2"],
+  "detail-type": ["AWS API Call via CloudTrail"],
+  "detail": {
+    "eventSource": ["ec2.amazonaws.com"],
+    "eventName": ["AuthorizeSecurityGroupIngress", "AuthorizeSecurityGroupEgress"],
+    "$or": [{
+      "requestParameters": {
+        "ipPermissions": {
+          "items": {
+            "ipRanges": {
+              "items": {
+                "cidrIp": ["0.0.0.0/0"]
+              }
+            }
+          }
+        }
+      }
+    }, {
+      "requestParameters": {
+        "ipPermissions": {
+          "items": {
+            "ipv6Ranges": {
+              "items": {
+                "cidrIpv6": ["::/0"]
+              }
+            }
+          }
+        }
+      }
+    }]
+  }
+}
+
+---
+
+{
+  "actor": "$.detail.userIdentity.arn",
+  "portFrom": "$.detail.requestParameters.ipPermissions.items[0].fromPort",
+  "portTo": "$.detail.requestParameters.ipPermissions.items[0].toPort",
+  "protocol": "$.detail.requestParameters.ipPermissions.items[0].ipProtocol",
+  "region": "$.region",
+  "sgId": "$.detail.requestParameters.groupId",
+  "time": "$.detail.eventTime"
+}
+
+---
+
+"SECURITY ALERT 🚨 | At <time>, Security Group <sgId> was opened to 0.0.0.0/0 for ports <portFrom>-<portTo> (<protocol>) in <region> by <actor>. Act immediately."
+
+---
+
+
+
+
+
+
+
+
