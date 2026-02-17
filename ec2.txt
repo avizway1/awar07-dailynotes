@@ -486,25 +486,79 @@ Create a Management trail in Cloudtrail and perform the IAM releated activity.
 Cron Generation help : https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-scheduled-rule-pattern.html
 
 
+=========
+
+Any IAM user wil have 2 types of accesses.
+
+AWS management console access : username, password and Sign-url --> browser
+Programatic Access : Accesskey and SecretAccesskey	--> CLI
+
+Programatic Access is not much secured.
+Cred stores in Plain text format. it wont rotate.
+
+c:/users/administaror/.aws --> config and credentials
+~/.aws --> config and credentials
+
+Navigate to "https://aws.amazon.com/cli", downlaod and install CLI
 
 
+aws --version			--> TO identify installed aws cli version
+
+aws configure
+AccesskeyId : 
+SecretAccesskey: 
+DefualtRegion : ap-south-1
+DefaultOutput : json/table
 
 
+aws sts get-caller-identity			--> TO see / fetch currently configured user info
+
+aws configure list					--> list the currently configure profile
+
+aws configure list-profiles
+
+aws iam list-users
+aws ec2 describe-instances --region eu-north-1
+
+--
+
+aws configure --profile uat
+aws configure --profile prd
+
+aws s3 ls							--> List the buckets from deafult profile
+aws s3 ls --profile <uat>			--> List the buckets from uat profile
+
+aws s3 mb s3://aviz6-cli-test2
+
+aws s3 ls --debug					--> generate logs with debug
+
+aws servicename command arguments
 
 
+aws iam create-user --user-name aviz6-cli
+
+aws iam attach-user-policy --user-name aviz6-cli --policy-arn arn:aws:iam::aws:policy/IAMReadOnlyAccess
 
 
+aws ec2 describe-instances --region ap-south-1
+
+Search Instance by Name tag
+aws ec2 describe-instances --filters "Name=tag:Name,Values=*Jenkins-Server*" --output table
+
+Search for only running ec2 instance
+aws ec2 describe-instances --filters "Name=instance-state-name,Values=running" --output table
+
+Search using Private IP:
+aws ec2 describe-instances --filters "Name=private-ip-address,Values=172.31.22.18" --output table
 
 
+--
 
+aws iam list-users --query "Users[*].[UserName, CreateDate]" --output table
 
+aws ec2 describe-instances		--> PrivateIP
 
-
-
-
-
-
-
+aws ec2 describe-instances --query 'Reservations[*].Instances[*].PrivateIpAddress' --output text
 
 
 
