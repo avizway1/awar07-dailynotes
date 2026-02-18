@@ -560,6 +560,49 @@ aws ec2 describe-instances		--> PrivateIP
 
 aws ec2 describe-instances --query 'Reservations[*].Instances[*].PrivateIpAddress' --output text
 
+[*]	--> Select all elements
+[0] --> First element
+
+
+aws iam list-access-keys --username USERNAME  --query 
+
+
+aws s3 sync c:/desktop/folder/ s3://avizway/lmsdata/
+
+
+===========
+
+D: 18/02/2026
+
+Roles : helps to access aws resources securely, without storing accesskey/secretaccess keys.
+
+
+
+
+below policy is required at role to connect to instance using SSM Instance connect option: 
+AmazonSSMManagedInstanceCore
+
+
+
+
+#!/bin/bash
+sudo dnf install httpd -y
+sudo systemctl start httpd
+sudo systemctl enable httpd
+sudo echo "<h1>THis is created by SSM RUn COmmand Demo </h1>" >> /var/www/html/index.html
+sudo dnf install tree -y
+sudo useradd avinash
+sudo usermod -aG wheel avinash
+
+
+
+
+
+
+
+
+
+
 
 
 
