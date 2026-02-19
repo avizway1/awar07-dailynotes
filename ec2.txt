@@ -17,7 +17,6 @@ Server = box = VM (Virtual Machine) = Instance = Azure VM = gcp compute engine
 
 On-Demand ec2 instances : No contract.. Pay for the usage based on Hourly.. We have flexibility to test lot of configuragtions.. 
 
-
 ---
 
 Reserved ec2 instance / RI : We can go with a contract with AWS for 1 yr period or 3 yrs period.. 
@@ -583,8 +582,6 @@ below policy is required at role to connect to instance using SSM Instance conne
 AmazonSSMManagedInstanceCore
 
 
-
-
 #!/bin/bash
 sudo dnf install httpd -y
 sudo systemctl start httpd
@@ -593,6 +590,122 @@ sudo echo "<h1>THis is created by SSM RUn COmmand Demo </h1>" >> /var/www/html/i
 sudo dnf install tree -y
 sudo useradd avinash
 sudo usermod -aG wheel avinash
+
+
+=======
+
+D: 19/02/2026
+
+
+Security group : it's a firewall, configured at instance level.
+** We can add multiple SGs for one ec2 instance
+** There is no option to DENY the traffic, Only allow is possible.
+** Chnages to the SG takes effect without any delays.
+
+Inbound = Traffic coming INTO your ec2 instance : ssh: 22, http:80, https:443, mysql:3306, mssql:1433
+Outbound = Traffic going OUT from your EC2 Instance : 0.0.0.0/0
+
+Why we mostly open outbound for anywhere.?
+--> To install anything, we get packages from internet.
+--> To access webpages
+--> To call external APIs
+--> Send logs to cloudwatch
+--> Access s3 from instance
+
+stateful : SG are stateful. Whatever traffic allowed inside, that automatically allowed outside. We really no need to worry about oputbound rules (0.0.0.0/0). 
+
+Stateless : We need to explicitly allow inbound and outbound traffic. VPC --> NACLs
+
+---
+
+USERDATA: we can pass commands only once, when instance launched for the first time.  These comamnds runs as "root" user.
+We can verify logs at : /var/log/cloud-init-output.log
+size should be less than 16KB.. 
+Put inside an s3 bucket and pass it.
+
+---
+
+METADATA: We can use this option to get data about our ec2 instance (When we are inside the OS).
+
+To access metadata, enable metadata option. 
+v1  : we can access info with metadata url. (less secured - Chances for SSRF attack (server side request forgery))
+v2  : It needs token to access metadata.
+
+
+
+curl http://169.254.169.254/latest/meta-data/network/interfaces/macs/02:34:5d:11:55:43/vpc-id
+
+
+ami-id
+ami-launch-index
+ami-manifest-path
+block-device-mapping/
+events/
+hostname
+identity-credentials/
+instance-action
+instance-id
+instance-life-cycle
+instance-type
+local-hostname
+local-ipv4
+mac
+managed-ssh-keys/
+metrics/
+network/
+placement/
+profile
+public-hostname
+public-ipv4
+public-keys/
+reservation-id
+security-groups
+services/
+
+---
+
+generate a token 
+
+TOKEN=$(curl -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600")
+
+AQAEAHg2t2MnS6tL7oxrRIPUo6ava3_kBFBC7EA72txj-B_I1nOWWQ==
+
+curl -H "X-aws-ec2-metadata-token: $TOKEN" http://169.254.169.254/latest/meta-data/
+
+---
+
+
+SPOT Instances : We have to bid our price against aws pricing. 
+Our quoted price is equal or higher than aws pricing, aws allocates the instance.
+
+Due to demand, if price increase, AWS terminates our ec2 instance. 
+Suggested to run instance where we dont have any effect, if instance terminated suddely.
+
+
+if price not changed, you terminated your instance, you need to pay full price
+
+AWS terminated your instance, due to demand/higher price, You get charged for full hours, not for partial hours.
+
+---
+
+Savings Plan : This is a billing commitment. 
+"I will spend $2 per hour on ec2 compute capacity for 1 year"
+
+--> We can change instance type (cpu/memory), AZs. 
+
+on-demand, spot and reserved instance ==> We are reserving the capacity.
+
+---
+
+
+
+
+Status checks
+placement groups
+tenancy option
+
+
+
 
 
 
