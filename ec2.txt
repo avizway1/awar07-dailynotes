@@ -697,22 +697,75 @@ on-demand, spot and reserved instance ==> We are reserving the capacity.
 
 ---
 
+D: 20/02/2026
+
+
+Tenancy : 
+
+Multi/Shared-Tenancy : One hardware can be shared with multiple customers.
+
+Single/Dedicated-Tenancy : hardware specifically allocated to only one customer.
+
+
+---
+
+3/3 status checks
+
+Instance status check : reboot / inspect logs / ssm connect / root volume replacement
+System status check : stop and start / contact aws
+Storage/EBS status check : AWS responsibility
+
+---
+
+placement groups : 
+
+Cluster PG : all instances runs on same h/w.. ultra low latency and low network throughput..
+if underlying h/w fails, all instances get affected.
+
+Partition PG : we will have partitions, every partition will have its own power and network connectivity.. 
+
+Spread PG : every instance runs on a seperate hardware..
+
+---
 
 
 
-Status checks
-placement groups
-tenancy option
+Application LB : Layer 7 : http, https : 
+
+Network LB : Layer 4 : TCP, UDP, TLS : It wont inspect the request..
+
+Classic LB : outdated..
+
+Gateway LB : 
+
+Applicaiton		--> Application : Layey 7 : (URL (/login, /api) / Hostname / Http headers, cookies) (URL, Host, Header)
+Presentation
+Session layer
+Transport layer	--> Network LB : Layer 4 : source ip, source port, dest ip, protocol (TCP/UDP) (IP + Port)
+Network layer
+Data link
+Physical layer
 
 
+NLB can handle millions of requests per second. 
+Operating at the connection level, Network Load Balancers are capable of handling millions of requests per second securely while maintaining ultra-low latencies.
 
 
+1A -
 
+#!/bin/bash
+sudo dnf install httpd -y
+sudo systemctl start httpd
+sudo systemctl enable httpd
+sudo echo "<h1>THis is my 1A ap-south-1a Instance </h1>" >> /var/www/html/index.html
 
+1B - 
 
-
-
-
+#!/bin/bash
+sudo dnf install httpd -y
+sudo systemctl start httpd
+sudo systemctl enable httpd
+sudo echo "<h1>THis is my 1B ap-south-1b Instance</h1>" >> /var/www/html/index.html
 
 
 
