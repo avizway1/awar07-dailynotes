@@ -767,6 +767,46 @@ sudo systemctl start httpd
 sudo systemctl enable httpd
 sudo echo "<h1>THis is my 1B ap-south-1b Instance</h1>" >> /var/www/html/index.html
 
+=========
+
+D: 21/02/2026
+
+
+
+ALB Defaultly used round robin algorith.
+
+
+http://my-alb-771543519.ap-south-1.elb.amazonaws.com:80
+
+http://my-alb-771543519.ap-south-1.elb.amazonaws.com:8080
+
+
+
+Round robin - default
+Round robin routes requests evenly across healthy targets, in a sequential order. This is commonly used when the received requests are similar in complexity and the targets are similar in processing capability.
+
+Least outstanding requests : Least outstanding requests routes requests to the target with the lowest number of in progress tasks. This is commonly used when the received requests vary in complexity or the targets vary in processing capability.
+
+
+Weighted random
+Weighted random routes requests evenly across healthy targets, in a random order. While Anomaly detection is applied by default, you must turn on Anomaly mitigation for Automatic Target Weights (ATW) to apply.
+
+
+----
+
+
+NLB : tcp, udp, tls.. 
+--> Supports millions of requests at ultra low latency
+--> This supports Static IP (We can add EIP)
+
+
+
+
+
+
+
+
+
 
 
 
