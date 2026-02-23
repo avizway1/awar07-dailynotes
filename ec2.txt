@@ -800,10 +800,29 @@ NLB : tcp, udp, tls..
 --> This supports Static IP (We can add EIP)
 
 
+===========
+
+D: 23/02/2026
+
+1. Launch an ec2 instance and make it as webserver
+2. Create an EFS and Mount it to ec2 instance.. reboot and verify
+3. Create a GoldenAMI
+4. Create a Launch template using "GAMI" and custom settings (keypair, SG, Type)
+5. Create a target Group
+6. Create a Load Balancer
+
+7. Create an ASG
 
 
+Manual Scaling
 
+Simple Scaling
+Step Scaling
+Target Tracking scaling
 
+Schedule Scaling
+
+Instance Refresh
 
 
 
