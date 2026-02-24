@@ -1,0 +1,48 @@
+
+
+
+
+
+Pre-Requisites:
+Create A record for your domain with Instance IP Address.. 
+
+ec2.awswithavinashreddy.com
+www.ec2.awswithavinashreddy.com
+
+
+Verify output with nslookup.. It should resolve to ec2 instance IP Address..
+
+
+sudo dnf install -y certbot mod_ssl python3-certbot-apache
+
+Create a configuration file first..
+
+vim /etc/httpd/conf.d/awswithavinashreddy.conf
+
+
+---
+
+<VirtualHost *:80>
+    ServerName ec2.awswithavinashreddy.com
+    ServerAlias www.ec2.awswithavinashreddy.com
+    DocumentRoot /var/www/html
+    
+    <Directory /var/www/html>
+        AllowOverride All
+        Require all granted
+    </Directory>
+    
+    ErrorLog /var/log/httpd/awswithavinash-error.log
+    CustomLog /var/log/httpd/awswithavinash-access.log combined
+</VirtualHost>
+
+-----
+
+sudo systemctl restart httpd
+
+sudo apachectl configtest
+
+sudo certbot --apache -d ec2.awswithavinashreddy.com -d www.ec2.awswithavinashreddy.com
+
+
+

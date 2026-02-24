@@ -826,6 +826,65 @@ Instance Refresh
 
 
 
+Cooldown & Timing
+
+Default Cooldown Period – A waiting period (default 300 seconds) after a scaling activity before another can begin; prevents rapid, unnecessary scaling
+
+Warm Pool – Pre-initialized instances kept in a stopped/running state so they can be launched faster than cold-starting new ones
+
+Instance Warm-up Period – Time given to a newly launched instance before it starts contributing to CloudWatch metrics (prevents premature scaling decisions based on incomplete data)
+
+Lifecycle Hooks – Allow you to pause instances during launch or termination to perform custom actions (e.g., pulling config, draining connections)
+
+===================
+
+D: 24/02/2026
+
+PLNXWEBICI02
+
+[Environment]-[Platform]-[ServiceType]-[ClientID]-[S.No]
+
+Env:
+P 	--> Production
+U	--> UAT
+Q	--> QA
+D	--> Dev
+S	--> Sandbox
+T	--> Training
+L	--> Central logging
+N	--> Central Network
+
+Platform / OS:
+Windows	--> WN
+Linux	--> LX
+
+ServiceType:
+APP	--> Application Server
+DBS	--> Databse Server
+WEB	--> Web Server
+FSR	--> File Server
+ADS	--> Active Directory
+MEX	--> Mail Exchange
+HDP	--> Hadoop Dist server
+
+Client:
+INT	--> Internal
+HDF	--> Hdfc bank
+ICI	--> Icici
+YES	--> yes Bank
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

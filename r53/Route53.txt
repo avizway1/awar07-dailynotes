@@ -1,0 +1,66 @@
+
+
+
+AWS DNS Servcie
+
+DNS = Domain Naming System / Service..
+
+Route53 = AWS DNS Service
+
+A Record : Address Record : IP <--> Name (ipv4)
+AAAA Record : Address Record : IP <--> Name (ipv6)
+CNAME : Cananical Name : Another Name
+TXT :  Simple Text Record : 
+MX : Mail Serer Records..
+
+Alias : 
+
+
+
+
+
+We cannot delete these records..
+NS : Name Server Record (THis helps to map AWS and Domain Registrer)
+SOA : Start of Authority Record : 
+
+DomainRegistrer : Godaddy, Bigrock, namecheaap, aws route53, hostinger
+ICANN : Domain uniqueness
+IANA root zonedb
+
+
+
+Step 1 : Purchase a Domain name 
+
+Step 2 : Create a HostedZone in R53 (Public)
+
+Step 3 : Grab the NS records from HostedZOne and configure it at Doamin Registrer
+
+ns-1959.awsdns-52.co.uk
+ns-154.awsdns-19.com
+ns-667.awsdns-19.net
+ns-1183.awsdns-19.org
+
+
+
+#!/bin/bash
+sudo dnf install httpd -y
+sudo systemctl start httpd
+sudo systemctl enable httpd
+sudo echo "<h1>THIS IS MY MUMBAI WEBSERVER</h1>" >> /var/www/html/index.html
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
