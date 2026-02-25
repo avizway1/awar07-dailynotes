@@ -13,7 +13,7 @@ CNAME : Cananical Name : Another Name
 TXT :  Simple Text Record : 
 MX : Mail Serer Records..
 
-Alias : 
+Alias : THis helps us to pick the aws appropriote resources automatically.
 
 
 
@@ -47,6 +47,61 @@ sudo dnf install httpd -y
 sudo systemctl start httpd
 sudo systemctl enable httpd
 sudo echo "<h1>THIS IS MY MUMBAI WEBSERVER</h1>" >> /var/www/html/index.html
+
+
+ipconfig /flushdns
+
+
+---
+
+AWS Route53 DNS has 2 types of resolvers, when we have hybrid-environments...
+
+
+Inbound DNS Resolver : On-Prem to AWS : 
+--> Allow on-premise systems to resolve private records inside the AWS VPC.
+
+Flow: On-prem server trying to access AWS DB with DNS name..
+
+On-Prem DNS server receives the query --> Forwards to Route53 "Inbound Endpoint" --> Route53 Hosted Zone --> verify the record --> Reach the Db server --> gets the response by On-prem server..
+
+
+---
+
+Onbound DNS Resolver : AWS --> On-Prem : 
+
+Flow: AWS Server trying to access on-prem hosted DB with DNS name..
+
+AWS Ec2 instance trying to access --> DNS HostedZone Resolver rule --> Forwards the traffic to "outbound endpoint" --> Req sends to on-rem DNS server --> reach the DB server...
+
+----
+
+
+http : HyperText Transfer Protocol : 
+Port : 80 
+Data is sent in Plain text
+No Encryption
+No Identity verification
+MITM : Man In The Middle Attach : If someone intercepts the traffic they can read, Passwords, API Token, Form data, Credit Card.. 
+
+
+
+https : Secure Over HTTP :
+HTTP Over TLS (Transport Layer Security) 
+Default Port: 443
+Data Is encrypted
+Server Identity Verified
+Data Integrity verified
+
+HTTPS uses: Symetric encryption, Digital Certificate, TLS handshake
+
+
+==========
+
+ACM : Amazon Certificate Manager
+
+We need to prove our ownership on the domain we are questing for SSL/TLS certificate.
+
+
 
 
 

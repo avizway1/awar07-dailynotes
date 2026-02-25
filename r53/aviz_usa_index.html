@@ -1,0 +1,1361 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Aviz Academy — USA Branch | Cloud & DevOps Training</title>
+  <meta name="description" content="Accelerate your cloud career with Aviz Academy USA. Expert-led training in AWS, Kubernetes, Docker, Terraform, CI/CD & more.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --primary: #2563EB;
+      --primary-dark: #1D4ED8;
+      --primary-light: #60A5FA;
+      --secondary: #3B82F6;
+      --accent: #1E40AF;
+      --bg-dark: #0A0E1A;
+      --bg-gradient: linear-gradient(135deg, #F8FAFF 0%, #EEF2FF 50%, #E0E7FF 100%);
+      --text-dark: #111827;
+      --text-muted: #4B5563;
+      --text-light: #9CA3AF;
+      --card-bg: #FFFFFF;
+      --border-color: rgba(37, 99, 235, 0.08);
+      --shadow-sm: 0 2px 8px rgba(37, 99, 235, 0.05);
+      --shadow-md: 0 8px 30px rgba(37, 99, 235, 0.08);
+      --shadow-lg: 0 20px 60px rgba(37, 99, 235, 0.12);
+      --shadow-xl: 0 30px 80px rgba(37, 99, 235, 0.16);
+      --radius: 16px;
+      --radius-sm: 10px;
+      --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--bg-gradient);
+      color: var(--text-dark);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* Scroll Animations */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ===== NAVIGATION ===== */
+    nav {
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      padding: 0;
+      box-shadow: 0 1px 0 var(--border-color);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      transition: box-shadow var(--transition);
+    }
+    nav.scrolled {
+      box-shadow: var(--shadow-md);
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+    .logo img {
+      height: 44px;
+      width: auto;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      list-style: none;
+    }
+    .nav-links a {
+      color: var(--text-dark);
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 500;
+      padding: 8px 16px;
+      border-radius: 8px;
+      transition: all var(--transition);
+    }
+    .nav-links a:hover {
+      color: var(--primary);
+      background: rgba(37, 99, 235, 0.05);
+    }
+    .nav-links .btn-nav {
+      background: var(--primary);
+      color: #fff;
+      padding: 10px 22px;
+      border-radius: var(--radius-sm);
+      font-weight: 600;
+    }
+    .nav-links .btn-nav:hover {
+      background: var(--primary-dark);
+      color: #fff;
+    }
+
+    .branch-badge {
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      color: white;
+      padding: 5px 14px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+    }
+
+    /* Hamburger */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 8px;
+      border: none;
+      background: none;
+    }
+    .hamburger span {
+      width: 24px;
+      height: 2.5px;
+      background: var(--text-dark);
+      border-radius: 2px;
+      transition: all var(--transition);
+    }
+    .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+    .hamburger.active span:nth-child(2) { opacity: 0; }
+    .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+    /* ===== HERO ===== */
+    .hero {
+      position: relative;
+      padding: 100px 24px 80px;
+      text-align: center;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -20%;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(37,99,235,0.06) 0%, transparent 70%);
+      border-radius: 50%;
+      animation: float 8s ease-in-out infinite;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -30%;
+      right: -10%;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(96,165,250,0.06) 0%, transparent 70%);
+      border-radius: 50%;
+      animation: float 10s ease-in-out infinite reverse;
+    }
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0); }
+      50% { transform: translate(30px, -20px); }
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(37,99,235,0.06);
+      border: 1px solid rgba(37,99,235,0.12);
+      padding: 8px 20px;
+      border-radius: 50px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--primary);
+      margin-bottom: 28px;
+    }
+    .hero-tag .dot {
+      width: 8px;
+      height: 8px;
+      background: var(--primary);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    .hero h1 {
+      font-size: clamp(36px, 5vw, 60px);
+      font-weight: 900;
+      color: var(--text-dark);
+      margin-bottom: 24px;
+      line-height: 1.15;
+      letter-spacing: -1px;
+    }
+    .hero h1 span {
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero p {
+      font-size: 19px;
+      color: var(--text-muted);
+      max-width: 600px;
+      margin: 0 auto 40px;
+      line-height: 1.7;
+    }
+
+    .cta-group {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 15px 32px;
+      border-radius: var(--radius-sm);
+      font-weight: 600;
+      font-size: 16px;
+      text-decoration: none;
+      transition: all var(--transition);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      border: none;
+    }
+    .btn-primary {
+      background: var(--primary);
+      color: #fff;
+      box-shadow: 0 4px 20px rgba(37,99,235,0.3);
+    }
+    .btn-primary:hover {
+      background: var(--primary-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(37,99,235,0.35);
+    }
+    .btn-secondary {
+      background: #fff;
+      color: var(--text-dark);
+      border: 1.5px solid var(--border-color);
+      box-shadow: var(--shadow-sm);
+    }
+    .btn-secondary:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+      box-shadow: var(--shadow-md);
+    }
+
+    .hero-trusted {
+      margin-top: 60px;
+      color: var(--text-light);
+      font-size: 13px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+    }
+    .hero-logos {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 36px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+      opacity: 0.45;
+      font-size: 26px;
+      font-weight: 800;
+      color: var(--text-light);
+    }
+
+    /* ===== CONTAINER ===== */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .section {
+      padding: 80px 0;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 56px;
+    }
+    .section-header .overline {
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--primary);
+      margin-bottom: 12px;
+    }
+    .section-header h2 {
+      font-size: clamp(28px, 4vw, 40px);
+      font-weight: 800;
+      color: var(--text-dark);
+      margin-bottom: 16px;
+      letter-spacing: -0.5px;
+    }
+    .section-header p {
+      font-size: 18px;
+      color: var(--text-muted);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* ===== STATS ===== */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+    }
+    .stat-card {
+      background: var(--card-bg);
+      padding: 36px 24px;
+      border-radius: var(--radius);
+      text-align: center;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border-color);
+      transition: all var(--transition);
+    }
+    .stat-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+    }
+    .stat-number {
+      font-size: 44px;
+      font-weight: 900;
+      color: var(--primary);
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: 15px;
+      color: var(--text-muted);
+      margin-top: 8px;
+      font-weight: 500;
+    }
+
+    /* ===== FEATURES ===== */
+    .features {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .feature-card {
+      background: var(--card-bg);
+      padding: 36px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border-color);
+      transition: all var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--primary), var(--primary-light));
+      opacity: 0;
+      transition: opacity var(--transition);
+    }
+    .feature-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-lg);
+    }
+    .feature-card:hover::before {
+      opacity: 1;
+    }
+    .feature-icon {
+      width: 52px;
+      height: 52px;
+      background: rgba(37,99,235,0.06);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      margin-bottom: 20px;
+    }
+    .feature-card h3 {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: var(--text-dark);
+    }
+    .feature-card p {
+      color: var(--text-muted);
+      line-height: 1.7;
+      font-size: 15px;
+    }
+
+    /* ===== TECHNOLOGIES ===== */
+    .tech-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 16px;
+    }
+    .tech-item {
+      background: var(--card-bg);
+      padding: 24px 16px;
+      border-radius: var(--radius-sm);
+      text-align: center;
+      border: 1px solid var(--border-color);
+      transition: all var(--transition);
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--text-dark);
+    }
+    .tech-item:hover {
+      border-color: var(--primary);
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+    }
+    .tech-item .tech-icon {
+      font-size: 32px;
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    /* ===== PROCESS / HOW IT WORKS ===== */
+    .process-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+      position: relative;
+    }
+    .process-grid::before {
+      content: '';
+      position: absolute;
+      top: 40px;
+      left: 12%;
+      right: 12%;
+      height: 2px;
+      background: linear-gradient(90deg, var(--primary), var(--primary-light));
+      opacity: 0.15;
+    }
+    .process-step {
+      text-align: center;
+      position: relative;
+    }
+    .process-number {
+      width: 56px;
+      height: 56px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      color: #fff;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      font-weight: 800;
+      margin-bottom: 20px;
+      position: relative;
+      z-index: 2;
+    }
+    .process-step h4 {
+      font-size: 17px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: var(--text-dark);
+    }
+    .process-step p {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* ===== CURRICULUM ===== */
+    .curriculum-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+    .curriculum-item {
+      background: var(--card-bg);
+      padding: 28px 32px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-color);
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      transition: all var(--transition);
+    }
+    .curriculum-item:hover {
+      border-color: var(--primary);
+      box-shadow: var(--shadow-sm);
+    }
+    .curriculum-item .check {
+      width: 28px;
+      height: 28px;
+      background: rgba(37,99,235,0.08);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary);
+      font-weight: 800;
+      font-size: 14px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .curriculum-item h4 {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 4px;
+    }
+    .curriculum-item p {
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    /* ===== TESTIMONIALS ===== */
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .testimonial-card {
+      background: var(--card-bg);
+      padding: 32px;
+      border-radius: var(--radius);
+      border: 1px solid var(--border-color);
+      box-shadow: var(--shadow-sm);
+      transition: all var(--transition);
+    }
+    .testimonial-card:hover {
+      box-shadow: var(--shadow-md);
+    }
+    .testimonial-stars {
+      color: #F59E0B;
+      font-size: 16px;
+      margin-bottom: 16px;
+      letter-spacing: 2px;
+    }
+    .testimonial-card blockquote {
+      font-size: 15px;
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin-bottom: 20px;
+      font-style: italic;
+    }
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .testimonial-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-weight: 700;
+      font-size: 16px;
+    }
+    .testimonial-name {
+      font-weight: 600;
+      font-size: 15px;
+      color: var(--text-dark);
+    }
+    .testimonial-role {
+      font-size: 13px;
+      color: var(--text-light);
+    }
+
+    /* ===== FAQ ===== */
+    .faq-list {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-color);
+      margin-bottom: 12px;
+      overflow: hidden;
+      transition: all var(--transition);
+    }
+    .faq-item:hover {
+      border-color: rgba(37,99,235,0.15);
+    }
+    .faq-question {
+      width: 100%;
+      padding: 20px 24px;
+      background: none;
+      border: none;
+      text-align: left;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text-dark);
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: inherit;
+    }
+    .faq-question::after {
+      content: '+';
+      font-size: 22px;
+      color: var(--primary);
+      font-weight: 300;
+      transition: transform var(--transition);
+    }
+    .faq-item.open .faq-question::after {
+      transform: rotate(45deg);
+    }
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease;
+    }
+    .faq-answer p {
+      padding: 0 24px 20px;
+      font-size: 15px;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+    .faq-item.open .faq-answer {
+      max-height: 200px;
+    }
+
+    /* ===== CTA BANNER ===== */
+    .cta-banner {
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      border-radius: var(--radius);
+      padding: 64px 48px;
+      text-align: center;
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-banner::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 400px;
+      height: 400px;
+      background: rgba(255,255,255,0.06);
+      border-radius: 50%;
+    }
+    .cta-banner h2 {
+      font-size: clamp(26px, 3.5vw, 36px);
+      font-weight: 800;
+      margin-bottom: 16px;
+      position: relative;
+    }
+    .cta-banner p {
+      font-size: 18px;
+      opacity: 0.9;
+      max-width: 500px;
+      margin: 0 auto 32px;
+      position: relative;
+    }
+    .btn-white {
+      background: #fff;
+      color: var(--primary);
+      padding: 16px 36px;
+      border-radius: var(--radius-sm);
+      font-weight: 700;
+      font-size: 16px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all var(--transition);
+      position: relative;
+    }
+    .btn-white:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+    }
+
+    /* ===== CONTACT ===== */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+    }
+    .contact-card {
+      background: var(--card-bg);
+      padding: 40px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border-color);
+    }
+    .contact-card h3 {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      color: var(--text-dark);
+    }
+    .contact-card p {
+      color: var(--text-muted);
+      margin-bottom: 24px;
+      line-height: 1.7;
+    }
+    .contact-info-list {
+      list-style: none;
+      margin-top: 24px;
+    }
+    .contact-info-list li {
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 15px;
+      color: var(--text-dark);
+    }
+    .contact-info-list li:last-child { border-bottom: none; }
+    .contact-info-list .icon {
+      width: 36px;
+      height: 36px;
+      background: rgba(37,99,235,0.06);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+
+    .quick-links {
+      list-style: none;
+    }
+    .quick-links li {
+      margin: 6px 0;
+    }
+    .quick-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 500;
+      padding: 8px 0;
+      display: inline-block;
+      transition: color var(--transition);
+    }
+    .quick-links a:hover {
+      color: var(--primary);
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: var(--bg-dark);
+      color: #ccc;
+      padding: 64px 24px 32px;
+    }
+    .footer-grid {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 48px;
+    }
+    .footer-brand p {
+      font-size: 14px;
+      line-height: 1.7;
+      color: #999;
+      margin-top: 16px;
+      max-width: 280px;
+    }
+    .footer-col h4 {
+      color: #fff;
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .footer-col ul {
+      list-style: none;
+    }
+    .footer-col li {
+      margin: 10px 0;
+    }
+    .footer-col a {
+      color: #999;
+      text-decoration: none;
+      font-size: 14px;
+      transition: color var(--transition);
+    }
+    .footer-col a:hover {
+      color: var(--primary-light);
+    }
+    .footer-bottom {
+      max-width: 1200px;
+      margin: 48px auto 0;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+      font-size: 13px;
+      color: #666;
+    }
+
+    /* ===== BACK TO TOP ===== */
+    .back-to-top {
+      position: fixed;
+      bottom: 32px;
+      right: 32px;
+      width: 48px;
+      height: 48px;
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      font-size: 20px;
+      cursor: pointer;
+      box-shadow: var(--shadow-md);
+      opacity: 0;
+      visibility: hidden;
+      transition: all var(--transition);
+      z-index: 99;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .back-to-top.show {
+      opacity: 1;
+      visibility: visible;
+    }
+    .back-to-top:hover {
+      background: var(--primary-dark);
+      transform: translateY(-3px);
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 1024px) {
+      .features, .testimonials-grid { grid-template-columns: repeat(2, 1fr); }
+      .process-grid { grid-template-columns: repeat(2, 1fr); }
+      .process-grid::before { display: none; }
+      .footer-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 768px) {
+      .hamburger { display: flex; }
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: #fff;
+        flex-direction: column;
+        padding: 16px 24px;
+        box-shadow: var(--shadow-md);
+        gap: 4px;
+      }
+      .nav-links.open { display: flex; }
+      .nav-links a { padding: 12px 16px; width: 100%; }
+
+      .hero { padding: 60px 24px 40px; }
+      .stats { grid-template-columns: repeat(2, 1fr); }
+      .features, .testimonials-grid, .curriculum-grid { grid-template-columns: 1fr; }
+      .process-grid { grid-template-columns: 1fr 1fr; }
+      .process-grid::before { display: none; }
+      .contact-grid { grid-template-columns: 1fr; }
+      .cta-banner { padding: 48px 24px; }
+      .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+    }
+    @media (max-width: 480px) {
+      .stats { grid-template-columns: 1fr 1fr; gap: 12px; }
+      .stat-card { padding: 24px 16px; }
+      .stat-number { font-size: 32px; }
+      .hero-logos { gap: 20px; font-size: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav id="navbar">
+    <div class="nav-container">
+      <a href="#" class="logo">
+        <img src="https://avizacademy.com/assets/images/logo_hero.png" alt="Aviz Academy Logo">
+      </a>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#features">Features</a></li>
+        <li><a href="#curriculum">Curriculum</a></li>
+        <li><a href="#testimonials">Testimonials</a></li>
+        <li><a href="#faq">FAQ</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="mailto:usa@avizacademy.com" class="btn-nav">Enroll Now &rarr;</a></li>
+      </ul>
+      <span class="branch-badge">USA Branch</span>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero" id="home">
+    <div class="hero-content">
+      <div class="hero-tag"><span class="dot"></span> Admissions Open for 2025</div>
+      <h1>Master <span>Cloud & DevOps</span><br>in the USA</h1>
+      <p>Accelerate your career with expert-led training in AWS, Kubernetes, Docker, CI/CD, and Infrastructure as Code. Built for American tech professionals.</p>
+      <div class="cta-group">
+        <a href="mailto:usa@avizacademy.com" class="btn btn-primary">Get Started Today &rarr;</a>
+        <a href="#curriculum" class="btn btn-secondary">View Curriculum</a>
+      </div>
+      <div class="hero-trusted">Trusted by professionals from</div>
+      <div class="hero-logos">
+        <span>Amazon</span>
+        <span>Google</span>
+        <span>Meta</span>
+        <span>Microsoft</span>
+        <span>Netflix</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="container">
+
+    <!-- Stats -->
+    <section class="section reveal" id="stats">
+      <div class="stats">
+        <div class="stat-card">
+          <div class="stat-number">1000+</div>
+          <div class="stat-label">Students Trained</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">98%</div>
+          <div class="stat-label">Placement Rate</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">75+</div>
+          <div class="stat-label">Hands-on Labs</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">24/7</div>
+          <div class="stat-label">Support Available</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features -->
+    <section class="section reveal" id="features">
+      <div class="section-header">
+        <div class="overline">Why Choose Us</div>
+        <h2>Everything You Need to Succeed</h2>
+        <p>Our comprehensive training program is designed to take you from beginner to job-ready in weeks.</p>
+      </div>
+      <div class="features">
+        <div class="feature-card">
+          <div class="feature-icon">&#127891;</div>
+          <h3>Expert-Led Training</h3>
+          <p>Learn from certified professionals with 10+ years of industry experience in cloud architecture and DevOps at top US companies.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#128187;</div>
+          <h3>Hands-On Labs</h3>
+          <p>Practice on real AWS infrastructure across US regions. Build production-grade skills through practical exercises and real-world scenarios.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#128640;</div>
+          <h3>Career Support</h3>
+          <p>Resume building, mock interviews, LinkedIn optimization, and direct placement assistance with US-based hiring partners.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#127760;</div>
+          <h3>Flexible Schedule</h3>
+          <p>Weekend and evening batches tailored for US time zones. Attend live sessions and revisit recordings with lifetime access.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#129309;</div>
+          <h3>Community & Mentorship</h3>
+          <p>Join a thriving community of cloud professionals across the US. Get 1-on-1 mentorship and attend exclusive networking events.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#128196;</div>
+          <h3>Certification Prep</h3>
+          <p>Dedicated prep for AWS Solutions Architect, CKA/CKAD, Terraform Associate, and other industry certifications with practice exams.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Technologies -->
+    <section class="section reveal">
+      <div class="section-header">
+        <div class="overline">Tech Stack</div>
+        <h2>Technologies You'll Master</h2>
+        <p>Get hands-on with the most in-demand tools used by top US companies.</p>
+      </div>
+      <div class="tech-grid">
+        <div class="tech-item"><span class="tech-icon">&#9729;&#65039;</span>AWS</div>
+        <div class="tech-item"><span class="tech-icon">&#9784;&#65039;</span>Kubernetes</div>
+        <div class="tech-item"><span class="tech-icon">&#128051;</span>Docker</div>
+        <div class="tech-item"><span class="tech-icon">&#128736;&#65039;</span>Terraform</div>
+        <div class="tech-item"><span class="tech-icon">&#9881;&#65039;</span>Jenkins</div>
+        <div class="tech-item"><span class="tech-icon">&#128049;</span>GitHub Actions</div>
+        <div class="tech-item"><span class="tech-icon">&#128202;</span>Prometheus</div>
+        <div class="tech-item"><span class="tech-icon">&#128200;</span>Grafana</div>
+        <div class="tech-item"><span class="tech-icon">&#128218;</span>Ansible</div>
+        <div class="tech-item"><span class="tech-icon">&#128279;</span>GitLab CI</div>
+        <div class="tech-item"><span class="tech-icon">&#128190;</span>Linux</div>
+        <div class="tech-item"><span class="tech-icon">&#128220;</span>Python</div>
+      </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="section reveal">
+      <div class="section-header">
+        <div class="overline">How It Works</div>
+        <h2>Your Journey in 4 Steps</h2>
+        <p>From enrollment to placement, we've got you covered every step of the way.</p>
+      </div>
+      <div class="process-grid">
+        <div class="process-step">
+          <div class="process-number">1</div>
+          <h4>Enroll & Onboard</h4>
+          <p>Sign up, get access to the learning portal, and meet your dedicated mentor.</p>
+        </div>
+        <div class="process-step">
+          <div class="process-number">2</div>
+          <h4>Learn & Practice</h4>
+          <p>Attend live classes, complete hands-on labs, and build real-world projects.</p>
+        </div>
+        <div class="process-step">
+          <div class="process-number">3</div>
+          <h4>Get Certified</h4>
+          <p>Prepare for and pass industry-recognized AWS & cloud certifications.</p>
+        </div>
+        <div class="process-step">
+          <div class="process-number">4</div>
+          <h4>Land Your Job</h4>
+          <p>Get placement support, mock interviews, and connect with US hiring partners.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Curriculum -->
+    <section class="section reveal" id="curriculum">
+      <div class="section-header">
+        <div class="overline">Curriculum</div>
+        <h2>What You'll Learn</h2>
+        <p>A comprehensive, project-driven curriculum designed by US industry practitioners.</p>
+      </div>
+      <div class="curriculum-grid">
+        <div class="curriculum-item">
+          <div class="check">&#10003;</div>
+          <div>
+            <h4>AWS Cloud Services</h4>
+            <p>EC2, S3, RDS, Lambda, VPC, IAM, CloudWatch & more</p>
+          </div>
+        </div>
+        <div class="curriculum-item">
+          <div class="check">&#10003;</div>
+          <div>
+            <h4>Container Orchestration</h4>
+            <p>Docker, Kubernetes, Helm, EKS & container security</p>
+          </div>
+        </div>
+        <div class="curriculum-item">
+          <div class="check">&#10003;</div>
+          <div>
+            <h4>CI/CD Pipelines</h4>
+            <p>Jenkins, GitHub Actions, GitLab CI & ArgoCD</p>
+          </div>
+        </div>
+        <div class="curriculum-item">
+          <div class="check">&#10003;</div>
+          <div>
+            <h4>Infrastructure as Code</h4>
+            <p>Terraform, CloudFormation, Ansible & Pulumi</p>
+          </div>
+        </div>
+        <div class="curriculum-item">
+          <div class="check">&#10003;</div>
+          <div>
+            <h4>Monitoring & Observability</h4>
+            <p>Prometheus, Grafana, ELK Stack & Datadog</p>
+          </div>
+        </div>
+        <div class="curriculum-item">
+          <div class="check">&#10003;</div>
+          <div>
+            <h4>DevOps Practices</h4>
+            <p>Git workflows, Agile, SRE principles & DevSecOps</p>
+          </div>
+        </div>
+        <div class="curriculum-item">
+          <div class="check">&#10003;</div>
+          <div>
+            <h4>Linux & Scripting</h4>
+            <p>Shell scripting, Python automation & system admin</p>
+          </div>
+        </div>
+        <div class="curriculum-item">
+          <div class="check">&#10003;</div>
+          <div>
+            <h4>Capstone Projects</h4>
+            <p>End-to-end real-world projects for your portfolio</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="section reveal" id="testimonials">
+      <div class="section-header">
+        <div class="overline">Testimonials</div>
+        <h2>What Our Students Say</h2>
+        <p>Hear from graduates who've transformed their careers with Aviz Academy.</p>
+      </div>
+      <div class="testimonials-grid">
+        <div class="testimonial-card">
+          <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <blockquote>"Aviz Academy completely changed my career trajectory. I transitioned from a sysadmin role to a Cloud Engineer at a FAANG company within 5 months."</blockquote>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">JM</div>
+            <div>
+              <div class="testimonial-name">James Miller</div>
+              <div class="testimonial-role">Cloud Engineer, Amazon</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <blockquote>"The hands-on labs and real-world projects were game-changers. Passed my AWS SA Pro and CKA on the first attempt. Highly recommend!"</blockquote>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">SC</div>
+            <div>
+              <div class="testimonial-name">Sarah Chen</div>
+              <div class="testimonial-role">DevOps Lead, Google</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <blockquote>"Best investment I've made. The mentorship, placement support, and community are unmatched. Landed a 6-figure DevOps role in just 3 months."</blockquote>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">DP</div>
+            <div>
+              <div class="testimonial-name">David Patel</div>
+              <div class="testimonial-role">SRE, Microsoft</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section reveal" id="faq">
+      <div class="section-header">
+        <div class="overline">FAQ</div>
+        <h2>Frequently Asked Questions</h2>
+        <p>Got questions? We've got answers.</p>
+      </div>
+      <div class="faq-list">
+        <div class="faq-item">
+          <button class="faq-question">Do I need prior experience to enroll?</button>
+          <div class="faq-answer"><p>No! Our course is designed for beginners as well as experienced professionals. We start from the fundamentals and progressively build up to advanced topics used at top tech companies.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question">What is the duration of the program?</button>
+          <div class="faq-answer"><p>The full program runs for 3-4 months with live sessions on weekends. Classes are scheduled for US time zones (EST/PST). You also get lifetime access to all recorded content and lab environments.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question">Is there a placement guarantee?</button>
+          <div class="faq-answer"><p>While we don't guarantee placements, our 98% placement rate speaks for itself. We provide dedicated placement support including mock interviews, resume reviews, and direct connections to US hiring partners.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question">Are the classes live or pre-recorded?</button>
+          <div class="faq-answer"><p>All classes are conducted live by expert instructors with real-time Q&A. Every session is also recorded and made available for lifetime access so you can revisit any topic at your convenience.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question">What certifications will I be prepared for?</button>
+          <div class="faq-answer"><p>You'll be prepared for AWS Solutions Architect (Associate & Pro), AWS DevOps Engineer, CKA/CKAD (Kubernetes), Terraform Associate, and other industry certifications.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Banner -->
+    <section class="section reveal">
+      <div class="cta-banner">
+        <h2>Ready to Launch Your Cloud Career?</h2>
+        <p>Join the next US batch and start your transformation today. Limited seats available.</p>
+        <a href="mailto:usa@avizacademy.com" class="btn-white">Enroll Now &rarr;</a>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section class="section reveal" id="contact">
+      <div class="section-header">
+        <div class="overline">Contact Us</div>
+        <h2>Get in Touch</h2>
+        <p>Have questions? Our USA team is ready to help you get started.</p>
+      </div>
+      <div class="contact-grid">
+        <div class="contact-card">
+          <h3>USA Office</h3>
+          <p>Reach out to us for enrollment inquiries, course details, or to schedule a free counseling session with our team.</p>
+          <a href="mailto:usa@avizacademy.com" class="btn btn-primary">Contact USA Team &rarr;</a>
+          <ul class="contact-info-list">
+            <li><span class="icon">&#128231;</span> usa@avizacademy.com</li>
+            <li><span class="icon">&#128222;</span> +1 (555) 123-4567</li>
+            <li><span class="icon">&#128205;</span> United States</li>
+            <li><span class="icon">&#128336;</span> Mon - Fri, 9:00 AM - 6:00 PM EST</li>
+          </ul>
+        </div>
+        <div class="contact-card">
+          <h3>Quick Links</h3>
+          <ul class="quick-links">
+            <li><a href="https://avizacademy.com">&#8594; Main Website</a></li>
+            <li><a href="https://avizacademy.com/courses">&#8594; Course Catalog</a></li>
+            <li><a href="https://avizacademy.com/about">&#8594; About Us</a></li>
+            <li><a href="https://avizacademy.com/testimonials">&#8594; Student Reviews</a></li>
+            <li><a href="#faq">&#8594; FAQs</a></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <img src="https://avizacademy.com/assets/images/logo_hero.png" alt="Aviz Academy" style="height: 40px; filter: brightness(0) invert(1); opacity: 0.8;">
+        <p>A premier Cloud & DevOps training institute serving professionals across the United States. Empowering careers with hands-on, project-driven learning.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Programs</h4>
+        <ul>
+          <li><a href="#">Cloud & DevOps</a></li>
+          <li><a href="#">AWS Masterclass</a></li>
+          <li><a href="#">Kubernetes Pro</a></li>
+          <li><a href="#">Terraform IaC</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="https://avizacademy.com/about">About Us</a></li>
+          <li><a href="https://avizacademy.com/testimonials">Success Stories</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Support</h4>
+        <ul>
+          <li><a href="#faq">FAQ</a></li>
+          <li><a href="mailto:usa@avizacademy.com">Email Us</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms of Service</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2025 Aviz Academy — USA Branch. All rights reserved.</span>
+      <span>Empowering Cloud & DevOps Professionals Worldwide</span>
+    </div>
+  </footer>
+
+  <!-- Back to Top -->
+  <button class="back-to-top" id="backToTop" aria-label="Back to top">&#8593;</button>
+
+  <script>
+    // Navbar scroll effect
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 20);
+    });
+
+    // Hamburger menu
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.getElementById('navLinks');
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('active');
+      navLinks.classList.toggle('open');
+    });
+    navLinks.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        hamburger.classList.remove('active');
+        navLinks.classList.remove('open');
+      });
+    });
+
+    // FAQ accordion
+    document.querySelectorAll('.faq-question').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const item = btn.parentElement;
+        const isOpen = item.classList.contains('open');
+        document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+        if (!isOpen) item.classList.add('open');
+      });
+    });
+
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+    reveals.forEach(el => observer.observe(el));
+
+    // Back to top
+    const backToTop = document.getElementById('backToTop');
+    window.addEventListener('scroll', () => {
+      backToTop.classList.toggle('show', window.scrollY > 400);
+    });
+    backToTop.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  </script>
+</body>
+</html>
