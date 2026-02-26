@@ -1,0 +1,144 @@
+Default VPC : All subnets are internet facing subnets.. Less secure to run sensitive information.. 
+
+CustomVPC : We can customise public (internet facing) and private subnets (internal) based on our application / architectural requirements.
+
+Every region will have a default vpc. We can delete, if we dont have any resources init. 
+
+
+ISP : Internet Service Provider
+
+Public IP:
+https://checkip.amazonaws.com/
+https://whatismyipaddress.com/
+
+Private IP:
+ipconfig (192.168.1.18)
+ipcionfig /all
+
+ncpa.cpl --> network inter --> IP Info
+
+
+Public IP : Glabally unique IP allocated to a device. In our Home network ISPs allocate one Unique IP..  
+
+Private IP : Used within an internal network and it should be unique (within the network)
+
+IPv4 : 32 bit Address space : 32 empty slots to fill with 0 & 1 : 8.8.8.8 : 2^32 --> 4.3 Billion..
+IPv6 : 128 bit address space : 128 empty slots to fill with 0 & 1 : 2^128 --> 340 Undecillion IPs..
+
+--
+
+IPv4 has 5 classes
+
+Class A : 0.0.0.0 - 126.255.255.255 : 
+Class B : 128.0.0.0 - 191.255.255.255 : 
+Class C : 192.0.0.0 - 223.255.255.255 : 
+
+Class D : 224.0.0.0 - 239.255.255.255		: Multicasting
+Class E : 240.0.0.0 - 255.255.255.255		: Reserved for R&D
+
+127 --> loopback Address
+
+
+DHCP : Dynamic Host Configuration protocol : It allocates IP address to the device that added to the network.
+ 
+====
+
+Class A : 10.0.0.0 - 10.255.255.255
+Class B : 172.16.0.0 - 172.31.255.255
+Class C : 192.168.0.0 - 192.168.255.255
+
+
+Network : Group of inter connected devices.. All these devices can communicate each other.. 
+Host : A device with in a network, that consumes an IP.. 
+
+Class A : N.H.H.H
+Class B : N.N.H.H 
+Class C : N.N.N.H
+
+Class A : 0.0.0.0 - 126.255.255.255
+Class A : N.H.H.H
+How many networks we can create.? Ans: 127 Networks
+How many hosts we can add/create in a single network : Ans: 16 Million Hosts
+
+10.0.0.0
+10.(0-255).(0-255).(0-255)
+
+====
+
+Class B : 128.0.0.0 - 191.255.255.255
+Class B : N.N.H.H
+How many networks we can create.? Ans: 16,000 networks
+How many hosts we can add/create in a single network : Ans: 65k Hosts
+
+172.16.0.0
+172.16.0.1 / 0.2 / 0.3 ... 0.255.. 1.1...1.255.. 2.0..2.555... 255.255
+
+====
+
+Class C : 192.0.0.0 - 223.255.255.255
+How many networks we can create.? Ans: 2 million networks
+How many hosts we can add/create in a single network : Ans: 256 Hosts
+192.168.0.0
+192.168.0.1 
+192.168.0.2
+192.168.0.3
+...
+...
+192.168.0.255
+
+===========
+
+Subnetting: The process of deviding a larger network into smaller sub neworks
+
+CIDR : CLassless Inter Domain Routing :
+ 
+IPv4 : 32 Bit
+ 
+/32 --> 32 - 32 = 0 = 2^0 = 1
+/31 --> 32 - 31 = 1 = 2^1 = 2
+/30 --> 32 - 30 = 2 = 2^2 = 4
+/29 --> 32 - 29 = 3 = 2^3 = 8 
+/28 --> 32 - 28= 4 = 2^4 = 16							--> --> Min A VPC Supports is /28 Only
+/24 --> 256
+/20 --> 4096
+/16 --> 32 - 16 = 16 = 2^16 = 65536						--> Max A VPC Supports is /16 Only
+/0 --> 32 - 0 = 32 = 2^32 = 4M
+
+You can take any network, First IP and Last IP will be reserved.. 
+First IP : Network ID
+Last IP : Broadcast ID
+
+Along with above 2.. We cant use 3 more IPs in AWS.. 
+AWS DNS Server : Second IP
+AWS VPC Route : Third IP
+Future Use : 1 IP reserve
+
+--> In AWS Environment, Every VPC reserves 5 IPs.. 
+
+
+/28 --> 32 - 28= 4 = 2^4 = 16 - 5 = 11 Usable IPs.. 
+/24 --> 256 - 5 = 251 Usable IPs
+/20 --> 4096 - 5 = 4091 Usable IPs
+/16 --> 32 - 16 = 16 = 2^16 = 65536 - 5 = 65531 Usable IPs
+
+---	
+
+CIDR Planning : 
+--> How big VPC we required.? Ans : 
+--> How many Subnets we required.? Ans :
+--> How many Public SUbnets.? Ans:
+--> How many private Subnets.? Ans: 
+--> Do you have any future plans to extend this network.? Ans: 
+
+Public Subnet : Internet facing
+Private Subnet : No Direct Exposure to outer world to the resources running here.
+	--> Private Subnet with NAT : No Direct exposure to internet, but it can access internet.
+	--> Private Subnet without Internet
+
+
+
+
+
+
+
+
