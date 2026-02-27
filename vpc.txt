@@ -115,7 +115,6 @@ Future Use : 1 IP reserve
 
 --> In AWS Environment, Every VPC reserves 5 IPs.. 
 
-
 /28 --> 32 - 28= 4 = 2^4 = 16 - 5 = 11 Usable IPs.. 
 /24 --> 256 - 5 = 251 Usable IPs
 /20 --> 4096 - 5 = 4091 Usable IPs
@@ -124,16 +123,121 @@ Future Use : 1 IP reserve
 ---	
 
 CIDR Planning : 
---> How big VPC we required.? Ans : 
---> How many Subnets we required.? Ans :
---> How many Public SUbnets.? Ans:
---> How many private Subnets.? Ans: 
---> Do you have any future plans to extend this network.? Ans: 
+--> How big VPC we required.? Ans : 100.. (/25 or /24)
+--> How many Subnets we required.? Ans : 8 subnets
+--> How many Public SUbnets.? Ans: 2 subnets
+--> How many private Subnets.? Ans: 6 subnets
+--> Do you have any future plans to extend this network.? Ans: yes
 
 Public Subnet : Internet facing
 Private Subnet : No Direct Exposure to outer world to the resources running here.
 	--> Private Subnet with NAT : No Direct exposure to internet, but it can access internet.
 	--> Private Subnet without Internet
+
+
+100 IPs --> /25 --> 128 - 5 = 123 Usable IPs
+/24 --> 256 IPs - 5 = 251 Usable IPs..
+
+251 IPs --> Make it 8 parts
+
+192.168.0.0 - 192.168.255.255 --> Network.? : 
+Ans: 192.168.100.0/24
+
+2 --> Web
+WEB-CVPC-1A: 192.168.100.0/28
+WEB-CVPC-1B: 192.168.100.16/28
+
+2 --> App
+APP-CVPC-1A: 192.168.100.32/27
+APP-CVPC-1B: 192.168.100.64/27
+
+2 --> Db
+DB-CVPC-1A: 192.168.100.96/27
+DB-CVPC-1B: 192.168.100.128/27
+
+2 --> Lambda / caching / future
+SL-CVPC-1A: 192.168.100.160/27
+SL-CVPC-1B: 192.168.100.192/27
+
+Future use: 192.168.100.224/27
+
+IPAM : IP Address manager : 
+
+
+When you ncreate a new vpc, what are the components you get defualtly.? Ans: 
+RouteTable
+NACL
+DefualtSecurityGroup
+
+
+
+Step 1 : Create a VPC with CIDR range we selected. 
+
+Step 2 : Create Subnets with in the VPC we created.
+
+WEB-CVPC-1A: 192.168.100.0/28
+WEB-CVPC-1B: 192.168.100.16/28
+APP-CVPC-1A: 192.168.100.32/27
+APP-CVPC-1B: 192.168.100.64/27
+DB-CVPC-1A: 192.168.100.96/27
+DB-CVPC-1B: 192.168.100.128/27
+
+Step 3 : Create a Internet Gateway in Custom VPC and associate with the VPC.
+
+Step 4 : Create Custom Route tables.
+
+Public Route: WEB-CVPC-1A, WEB-CVPC-1B... Add "INTERNET GATEWAY" to this ROUTE TABLE.
+Private Route: DB-CVPC-1A, DB-CVPC-1B
+Private with internet: APP-CVPC-1A, APP-CVPC-1B
+
+Step 5 (Optional) : Enable "Auto Assign Public IP" for Public Subnets.
+
+Step 6 (Optional but recommended) : choose VPC, Select "edit vpc settings", Enable "DNS Hostnames" and "DNS resolution"
+
+---
+
+
+** MAKE SURE TO DELETE NAT AFTER YOUR PRACTICE. 
+
+I need internet to my private subnet instances.!!
+
+NAT Gateway: We can control communication (Public / Private)
+
+Public NAT gateway (Regional): 
+--> Placed in a Public Subnet
+--> Uses an EIP
+--> This allows Private subnet instances to access internet.
+--> Managed by AWS
+
+Private NAT gateway : 
+--> Placed in private Subnet
+--> No EIP
+--> used for Private-to-private traffic
+--> No Direct access to internet.
+
+
+Availability Mode of NAT: 
+
+Regional : Scales automatically across all regional AZs, simplifying management for multi AZ deployments.
+Zonal: Provides granular control within a specific availability zone, adhering to subnet level settings.
+
+---
+
+We can use Site-2-site VPN conenction / Direct Connect to establish connection between AWS and On-premise environment. Directly, we can access all the AWS private subnet resources using Private IPs.
+
+---
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
