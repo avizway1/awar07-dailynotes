@@ -227,11 +227,29 @@ We can use Site-2-site VPN conenction / Direct Connect to establish connection b
 
 ---
 
+D: 02/03/2026
+
+NETWORK ACL / NACls : 
+
+By defaultly, all subnets witll be part of Defualt NetworkACL. Ans, It allows all the traffic to all the network..
+
+newly created network ACLs, wont allow any traffic to any network. It blocks everything.
+
+One subnet can be member of one NACL at a time. 
+
+We have to create rules increments of 100s.. (100 / 200 / 300..)
+
+SGs will have only allow option.. SG Dont have DENY option..
+
+NACLs have allow and deny option. If you want to deny the traffic to a particular network, you cna grab the Network IP and and deny it. 
 
 
+--
 
-
-
+We have option to enable logs at 
+1. vpc level
+2. subnet level
+3. individual instance level
 
 
 
