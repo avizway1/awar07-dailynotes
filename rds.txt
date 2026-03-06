@@ -88,28 +88,76 @@ EXIT;
 
 D: 05/03/2026
 
+Multi-AZ : 
+Read Replica : 
+
+Snapshots
+---
+
+D: 06/03/2026
+
+Aurora DB has Serverless option. 
+
+serverless = We dont manage servers. 
+
+ACU = Aurora capacitty Units
 
 
-Name:    multi-azdemo.cfpgnjehw330.ap-south-1.rds.amazonaws.com
-Address:  172.31.29.91 - 1c
-Address:  172.31.13.22 - 1b
+Aurora: Up to 128 TB of autoscaling SSD storage
+
+Other DBs: Supports database size up to 64 TiB.
 
 
 
 
 
+mysql -h myaurora.cluster-cfpgnjehw330.ap-south-1.rds.amazonaws.com -u admin -P 3306 -p
 
 
+mysql -h myaurora.cluster-ro-cfpgnjehw330.ap-south-1.rds.amazonaws.com -u admin -P 3306 -p
 
 
+---
 
 
+OLAP : Online Analytical Processing : Data will be semi/no organised.. : JSON : DynamoDB
+
+OLTP : Online Transactional processing : Data will be well organised.. : Table : RDS
+
+DynamoDB : Serverless : 
+
+**Single Digit million second latency at any scale of data.. 
+**Caching option/Solution for DynamoDB : DynamoDB AX/Accelerator
 
 
+Table : It holds Items.
+Item : A single row/record. it have its own attributes.
+Attributes : The column of that item. One item can have multiple attributes.
+PrimaryKey : With this only, DynamoDB finds our data. 
+
+Partition KeyOnly : Single Key
+Composite Key : Partition key + Sort key
 
 
+Read/Write Capacity : 
+--> Provisioned Mode : We can get a fixed number of requests.
+--> On-Demand Mode : For unpredictable worklopads.. Pay-as-you-go.. 
+
+How exactly RDS has "region scaling" option, DynamoDB has, "GLobal Tables"
+
+---
+
+DynamoDB UseCases:
+Session Staorage 
+Shipping Cart
+Millions or req/sec 
+Analytical report
 
 
+Relational DB / RDS :
+Complex JOINs
+Fixed Schema
+Financial Reporting
 
 
 
