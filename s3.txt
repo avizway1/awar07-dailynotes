@@ -1,0 +1,114 @@
+
+
+
+S3: Object Based Storage : GDrive / Dropbox / icloud
+
+EBS : Block Based Storage : 
+
+EFS : Shared Storage / Store over the Network (SAN/NAS)
+
+S3 is an object based storage solution.. 
+We can upload anything and we call it as object.
+
+We can store data into "Bucket".. Unique namespace across the globe..
+
+bucket = folder / directory..
+
+
+Min: 3 char.. Max 63 char..
+Bucket name must start with a lowercase letter or number
+Bucket name must not end with dash or period
+The bucket name contains characters that aren't valid: ,
+Bucket name must not contain two adjacent periods
+Bucket name must not resemble an IP address
+
+We use s3 platform to store static data..
+
+We can store unlimited data inside an s3 bucket. 
+
+Min Obj size : 0 bytes
+Max Obj size : 50 TB
+
+s3 : 
+
+Virtual path:
+https://bucket-name.region-code.amazonaws.com/object-name
+https://bucket-name.s3.amazonaws.com/object-name
+
+Standard path: https://s3.region-code.amazonaws.com/bucket-name/object-name
+
+--
+
+By default, all data we upload to s3 is private. We need to make it public to share the data over the internet.
+
+3 Level public block access settings available in AWS.
+
+1. Account level block public access - Disabled by defaultly
+2. Bucket level block public access - Enabled by defaultly
+3. Object level settings
+
+We have 2 ways to make data public
+--> ACL --> Disabled by defaultly, Enable it. (one time)
+--> Bucket policy
+
+---
+
+AWS Pricing:
+How many API calls hapening on our data. (PUT/GET)
+How much data transferring
+
+
+
+S3 Standard : Frequently Accessed Data.. 
+** We can access data without any delays.
+Data will be span across multiple AZs, Data replicates >=3 AZs
+99.99% Availability
+99.999999999 % Durability
+
+
+S3 Standard - IA (Infrequently Access) / OneZone - IA : Infrequently accessed data (once a month) with milliseconds access
+OneZone - IA : Recreatable, infrequently accessed data (once a month) with milliseconds access
+**We can access data without any delays.
+Data will be span across multiple AZs, Data replicates >=3 AZs
+
+
+S3 Glacier (Instant Retrival / Flexible retrival / Deep Archieve) : 
+**We cannot access data immediatly.. 
+
+Glacier Instant Retrieval: Long-lived archive data accessed once a quarter with instant retrieval in milliseconds
+Glacier Flexible Retrieval (formerly Glacier) : Long-lived archive data accessed once a year with retrieval of minutes to hours
+Glacier Deep Archive : Long-lived archive data accessed less than once a year with retrieval of hours
+
+To access the data stored in glacier, We need to initialise the restoration.
+Bulk retrieval: Typically within 5-12 hours.
+Standard retrieval: Typically within 3-5 hours.
+Expedited retrieval: Typically within 1-5 minutes when retrieving less than 250 MB.
+
+
+S3 Intelligent Tier : 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
