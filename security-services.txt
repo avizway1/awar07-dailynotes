@@ -120,10 +120,3 @@ Replicate only : Replicate data from source to target now or at a specified mile
 
 CDC : Change Data Capture
 
-
-
-
-
-
-
-
