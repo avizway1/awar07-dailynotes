@@ -1,0 +1,16 @@
+Parameters:
+  BucketName:
+    Type: String
+    Description: Enter name of the S3 bucket you want to create
+    Default: avinash-test-default-1211
+
+Resources:
+  MyS3Bucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Ref BucketName
+
+Outputs:
+  S3Bucketname:
+    Description: Created bucket name is
+    Value: !Ref MyS3Bucket

@@ -1,0 +1,30 @@
+Parameters:
+    InstanceType:
+      Type: String
+      Description: Choose the Instance type you want to launch
+      Default: t3.micro
+      AllowedValues: 
+        - t3.micro
+        - t3.small
+        - t2.micro
+    AvailabilityZone:
+      Type: String
+      Description: Choose the Availability Zone for your instance
+      Default: ap-south-1a
+      AllowedValues: 
+        - ap-south-1a
+        - ap-south-1b
+
+Resources:
+    MyprodInstance:
+      Type: AWS::EC2::Instance
+      Properties:
+          ImageId: ami-0f559c3642608c138
+          AvailabilityZone: !Ref AvailabilityZone
+          KeyName: jenkins-kp
+          InstanceType: !Ref InstanceType
+
+Outputs:
+    EC2InstanceOutput:
+      Description: The Instance Id
+      Value: !Ref MyprodInstance

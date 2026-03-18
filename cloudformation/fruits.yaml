@@ -1,0 +1,67 @@
+fruit: apple
+color: red
+origin: simla
+
+---
+#List format
+fruits:
+  - apple
+  - banana
+  - mango
+  - green apple
+
+---
+#flowstyle
+
+fruits: [apple, banana, mango, green apple]
+
+---
+
+fruits:
+name: apple #string
+price: 20   #number
+is_available: true #boolian
+
+---
+
+fruits:
+  - apple
+  - banana
+  - mango
+  - green apple
+apple:
+    name: apple
+    price: 20
+    is_available: true
+mango:
+    name: mango
+    price: 20
+    is_available: true
+
+---
+
+#nested details
+fruit_details:
+apple:
+  color: red
+  price: 50
+  is_available: true
+banana:
+  color: red
+  price: 50
+  is_available: true
+fruits_colors: {apple: red, banana: yellow}
+
+---
+fruits:
+  bestfruit: apple
+  sweetfruit: banana
+  healthyfruit: mango
+AvinashFruitBasket:
+  FirstChoice: !Ref sweetfruit
+  SecondChoice: !Ref bestfruit
+  ThirdChoice: !Ref healthyfruit
+AnudeepFruitBasket:
+  FirstChoice: !Ref healthyfruit
+  SecondChoice: !Ref sweetfruit
+  ThirdChoice: !Ref bestfruit

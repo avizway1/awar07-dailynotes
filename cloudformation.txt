@@ -1,0 +1,10 @@
+
+
+1. Resource : What do you want to create.? (s3/ec2/iam) - Mandatory
+2. Parameter : 
+3. output : 
+
+
+https://docs.aws.amazon.com/AWSCloudFormation/latest/TemplateReference/aws-template-resource-type-ref.html
+
+
