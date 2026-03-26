@@ -61,6 +61,67 @@ Thumbs.db
 ----
 
 
+Clone : Taking an entire copy of the existing repository to your desired env. 
+
+
+PAT : Personal Access Token
+
+1. Token Authentication (PAT)
+2. SSH Authentication (SSH Key)
+
+
+--> SSH Auth
+
+keys location: ~/.ssh
+
+ls -al ~/.ssh
+
+step 1: Generated a set of public and private key
+ssh-keygen -t ed25519 -C "avizway@gmail.com"
+
+Step 2 : Add the ssh key to SSH agent
+
+eval "$(ssh-agent -s)"
+ssh-add ~/.ssh/id_ed25519
+
+Step 3 : Grab the public key content from local and add it in github settings.
+
+Step 4 : verify
+
+ssh -T git@github.com
+
+
+---
+
+status
+add
+commit
+push
+logs
+diff
+clone
+pull
+fork
+PR
+
+
+git log --oneline --graph --all
+
+---
+
+Branching helps us to create a seperate line of development to work on new features, bug fixes, enhancements without touching your main branch/codebase.
+
+git branch <branch-name>	--> create branch
+git switch <branch-name>	--> switching to the branch
+
+git branch -b <branch-name>	--> create branch and switch automatically
+
+
+
+
+
+
+
 
 
 
