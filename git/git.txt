@@ -116,17 +116,136 @@ git switch <branch-name>	--> switching to the branch
 
 git branch -b <branch-name>	--> create branch and switch automatically
 
+---
+
+Scenario: 
+branches edit diff files --> merge succesful automatically
+branches edit same file but diff lines --> merge succesful automatically
+Branches edit same file, same line --> Conflict (Resolve manually)
+
+--> Thumb Rule : We dont work on Main / Master branch.. Mostly Devs work on "feature/BugFix/Hotfix"
+
+-----
+
+Conflict generation:
+
+Create a repo and added a file "info.txt"
+Hello
+My name is XYZ
+Am working as ABC
+
+--
+
+CLone the repo on ec2 Instance
+
+git clone
+cd <repo>
+git checkout -b branch1
+
+Created a branch and switched to the branch, then edited the info.txt file..
+
+edited info.txt
+
+Hello
+My name is ABC
+Am working as DevOps Engineer
+
+--> Commited to local repo, but not "PUSHED" / "MERGE"
+
+----
+
+Switch to Laptop
+
+git clone
+cd <repo>
+
+modified info.txt
+
+Hello
+My name is CAT
+Am working as Cloud Engineer
 
 
+add, commit and push
+
+----
+
+Switch to ec2 instance, then switch to main branch..
+
+--> Pull the latest code to main branch..
+--> then try to merge "branch-1" to main branch.. Now you will get conflict..
+
+=====================
 
 
+echo "C1" > main.txt && git add . && git commit -m "C1"
+echo "C2" > main.txt && git add . && git commit -m "C2"
+echo "C3" > main.txt && git add . && git commit -m "C3"
 
 
+git log --oneline --graph --all
+
+git checkout -b feature HEAD~1
+
+git log --oneline --graph --all
+
+echo "D" > feature.txt && git add . && git commit -m "D - feature work"
+echo "E" > feature.txt && git add . && git commit -m "E - feature work"
+
+git log --oneline --graph --all
+
+git rebase master/main
+
+git log
 
 
+Important Note: The "Golden Rule" of rebasing is to "never rebase a public branch" that others are working on, as rewriting history will cause major synchronization issues for your teammates.
+
+-------
+
+Thumb Rule : do not push/commit unfinished work.
 
 
+We can store unfinished changes into a secure locaqtion, We called it as stash
 
 
+git stash						--> it stash current changes
+git stash push -m "message"		--> it stash current changes with messages
+git stash list					--> list all stashes
+git stash apply					--> apply latest stash
+git stash pop					--> apply the stash and deletes the stash
+git stash show -p				--> shows the stashed content
+git stash clear					--> clears the stash
 
+----
+
+Cherry pick : helps us to pick a specific commit from any branch and we can apply in our current branch without merging the entire branch.
+
+
+mkdir cherry-test && cd cherry-test
+git init
+
+echo "A - base setup" >> a.txt
+git add . && git commit -m "commit A - base setup"
+
+echo "B - core logic" >> b.txt
+git add . && git commit -m "B - core logic"
+
+
+git checkout -b feature
+
+
+echo "C1 - UI setup" >> c1.txt
+git add . && git commit -m "commit C1 - UI setup"
+
+echo "C2 - DB Setup" >> c2.txt
+git add . && git commit -m "commit C2 - DB Setup"
+
+echo "C3 - Cache Setup" >> c3.txt
+git add . && git commit -m "commit C3 - Cache Setup"
+
+
+git switch master
+
+git cherry-pick 490ec2c
 
