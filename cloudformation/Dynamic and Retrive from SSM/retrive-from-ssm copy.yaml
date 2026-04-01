@@ -1,0 +1,24 @@
+AWSTemplateFormatVersion: '2010-09-09'
+
+Parameters:
+
+  # CloudFormation reads the value from SSM automatically
+  InstanceType:
+    Type: AWS::SSM::Parameter::Value<String>
+    Default: /aviz/ec2/instancetype   # SSM parameter path
+
+Resources:
+
+  MyEC2:
+    Type: AWS::EC2::Instance
+    Properties:
+      ImageId: ami-05d2d839d4f73aafb
+      InstanceType: !Ref InstanceType   # value comes from SSM
+      Tags:
+        - Key: Name
+          Value: aviz-ssm-demo
+
+Outputs:
+
+  InstanceType:
+    Value: !Ref InstanceType
