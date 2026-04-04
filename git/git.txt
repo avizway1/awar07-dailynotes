@@ -114,8 +114,8 @@ Branching helps us to create a seperate line of development to work on new featu
 git branch <branch-name>	--> create branch
 git switch <branch-name>	--> switching to the branch
 
-git branch -b <branch-name>	--> create branch and switch automatically
-
+git branch -b <branch-name>	--> create branch and switch automatically -- this command is not working
+git switch c <branch-name>      -- Create branch and switch automatically 
 ---
 
 Scenario: 
