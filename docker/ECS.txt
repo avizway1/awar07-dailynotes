@@ -1,0 +1,49 @@
+
+
+Cluster : Logical grouping of our workload.
+Task : its a container (Sometimes, we may have 2 containers in a single task , 1: actual job, 2: Sidecar container)
+Service : Combination tasks that deliver same application.. (ALB / ASG)
+
+Task Definition : Blueprint for our container with info i.e; CPU, memory, Image, Port, Storage, Env var, tags.
+
+=====
+
+Fargate only: Serverless – you don't think about creating or managing servers. Great for most common workloads.
+
+Fargate and managed instances:  Managed instances - Amazon ECS will manage patching and scaling on your behalf while giving you configurability about the types of instances. Great for more advanced workloads.
+
+Fargate and Self-managed instances: Self-managed instances - you must ensure the instances are patched and scaled properly, and you have full control over the instances.
+
+----
+
+
+Container Insights : CloudWatch Container Insights is a monitoring and troubleshooting solution for containerised applications and microservices.
+
+Select the level of observability you want to achieve with Container Insights
+
+
+
+Container Insights with enhanced observability :  Provides detailed health and performance metrics at task and container level in addition to aggregated metrics at cluster and service level. Enables easier drill downs for faster problem isolation and troubleshooting.
+
+Container Insights :  Provides aggregated metrics at cluster and service level. You can run deep dive analysis with logs insights analytics.
+
+
+----
+
+Task Definition: 
+
+CPU
+memory
+Container Image
+
+
+Essential container : Yes: If this container dies, Kill the task. 
+
+
+
+
+
+
+
+
+

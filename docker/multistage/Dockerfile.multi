@@ -1,0 +1,21 @@
+# --- Stage 2: BUILD ---
+FROM golang:1.22-alpine AS builder
+
+WORKDIR /app
+
+COPY main.go .
+
+RUN go mod init demo && \
+    CGO_ENABLED=0 GOOS=linux go build -o server main.go
+
+
+# --- Stage 2: RUN ---
+# Start fresh with a ZERO-dependency base image
+FROM scratch
+
+# Copy ONLY the compiled binary from builder
+COPY --from=builder /app/server /server
+
+EXPOSE 8080
+
+CMD ["/server"]
