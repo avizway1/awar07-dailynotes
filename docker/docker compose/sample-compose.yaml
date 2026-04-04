@@ -1,0 +1,19 @@
+services:
+  web:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+    volumes:
+      - /home/ec2-user/compose:/usr/share/nginx/html
+
+  db:
+    image: mysql:latest
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: mydbpwd010753
+    volumes:
+      - mysql_data:/var/lib/mysql
+  
+volumes:
+  mysql_data:

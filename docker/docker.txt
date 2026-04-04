@@ -240,6 +240,202 @@ Less isolated, as it uses host network
 Bit faster as it uses host networtk directly
 system level tooling, Host monitoring agents
 
+=======
+
+Docker cotnainers uses Epehemral storage. All data deletes when container deleted.
+
+Volume : We have to create a volume, managed by docker (/var/lib/docker/volumes)
+
+Bind Mount : We can mount HOST machiene's directory to the cotnainer
+
+1. volumes
+
+docker volume ls					--> list existing volumes
+docker volume create mydata			--> create a volume
+
+docker volume rm mydata				--> delete a volume
+
+
+all the data stores inside : /var/lib/docker/volumes/mydata/_data
+
+docker volume inspect mydata
+
+--> To mount a volume to a container, we have 
+named Volume : 
+Anonymous Volume : 
+
+
+---
+
+Named Volume : 
+
+docker run -d --name mynginx -p 80:80 -v mydata:/usr/share/nginx/html nginx:1.28
+
+docker run -d --name mynginx3 -p 8888:80 -v mydata:/usr/share/nginx/html nginx:1.28
+
+
+docker run -d --name mysqldb -v mydata:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=MyPass@234 mysql:latest
+
+-----
+
+Anonymous Volume: Automatically one volume creates with random name
+
+docker run -d --name mynginx2 -p 8080:80 -v /usr/share/nginx/html nginx:1.28
+
+---
+
+
+BIND MOUNT : Pick a Host directory and mount it to container.
+
+docker run -d -p 80:80 -v /home/ec2-user/shared-data:/usr/share/nginx/html nginx:1.28
+
+=====
+
+if you want to make any volume readonly, we need to pass addl parameter.
+
+docker run -d -p 80:80 -v mydata:/usr/share/nginx/html:ro nginx:1.28
+
+================
+
+
+DOCKERFILE: 
+
+
+FROM 		: sets the base image. THis should be first instruction in every docker file. 
+FROM ubuntu:20.5
+FROM python:3.12-slim
+FROM alpine:latest
+
+RUN 		: Executed comamnds during the build process. 
+RUN apt-get update && apt-get install -y nginx
+RUN adduser appuser
+
+WORKDIR		: We can set the working directory for all subsequent instruction.
+WORKDIR /app
+WORKDIR /usr/share/nginx/html
+
+COPY		: Copies the files/Directories from our host machiene into the image. (use most of the times)
+COPY /home/ec2-user/ /app/
+COPY . .
+
+ADD			: THis is similar to COPY, but This supports (zip auto extracting and download remote url)
+ADD mydata.tar.gz /app/
+
+---
+CMD			: This sets the "default commnd" to run when the container starts. This "gets overriden" if you pass arguments when running "docker run " command.
+CMD ["nginx","-g", "daemon off;"]
+
+ENTRYPOINT	: Defines a command that "always runs", even if you pass any arguments wile runnning container with "docker run"
+ENTRYPOINT ["python", "app.py"]
+
+ENTRYPOINT ["python", "app.py"]   # Always runs
+CMD ["--port", "8080"]            # Default args, user can override
+---
+
+ENV			: Set Environment variables
+ENV	APP_ENV=Production
+ENV COSTID=AAZAA
+
+EXPOSE		: We can mention the container listerns on which particular port. (We always need to pass -p argument while running the container)
+EXPOSE 80
+
+VOLUME 		: Create a mount point for persintent or shared data/storage.
+VOLUME /var/lib/mysql
+
+USER		: sets the user for running the container. ***We never run container with root user for better security.
+USER appuser
+
+LABEL		: We can add any metadata to the container
+LABEL owner="avinash@aviz.com" Version="2.0"
+
+HEALTHCHECK	: tells docker to check healthcheck based on the arguments we pass along with healthcheck.
+
+HEALTHCHECK CMD curl --fail http://localhost:80 || exit 1
+
+
+
+While SIGTERM is the standard for most applications to initiate a "polite" exit, some specific software uses SIGQUIT to trigger a graceful shutdown that finishes active tasks before terminating.
+
+---
+
+docker build --no-cache -t image-name:tag .
+
+--no-cache	: it wont use the cache layers if we pass --no-cache
+
+---
+
+Step 1 ; Login to Dockerhub
+
+Step 2 : tag the image (dockerhubusername/imagena:tag)
+
+docker tag 4935e8839327 avizway/mygoapp:multi
+
+Step 3 : Push to docker
+
+docker push avizway/mygoapp:multi
+
+Now, anyone can pull this image using "docker pull avizway/mygoapp:multi"
+
+----
+
+docker search nginx
+
+docker search --filter is-official=true nginx
+
+==============
+
+AWS has ECR (Elastic Container Registry), Similar to "DockerHub"
+
+--> create a repo in ECR
+
+Step 1 : login to ECR Repo
+
+aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 655700896650.dkr.ecr.ap-south-1.amazonaws.com
+
+Step 2 : Tag the image
+
+docker tag mygoapp:v2 655700896650.dkr.ecr.ap-south-1.amazonaws.com/mygoapp:v2
+
+Step 3 : push the image
+
+docker push 655700896650.dkr.ecr.ap-south-1.amazonaws.com/mygoapp:v2
+
+==============
+
+
+Docker compose helps us to run multiple containers at a time using a single YAML file.file name  "docker-compose.yaml"
+
+Install Docker Compose with below command
+
+# Ensure the directory exists
+mkdir -p ~/.docker/cli-plugins
+
+# Download the correct binary (copy the entire line)
+curl -SL https://github.com/docker/compose/releases/latest/download/docker-compose-linux-$(uname -m) -o ~/.docker/cli-plugins/docker-compose
+
+# Make the plugin executable
+chmod +x ~/.docker/cli-plugins/docker-compose
+
+
+---
+
+
+docker compose up
+docker compose up -d
+docker compose down
+docker compose down -v
+docker compose build
+docker compose ps
+docker compose logs
+docker compose restart
+docker compose top
+
+
+
+
+
+
+
 
 
 
