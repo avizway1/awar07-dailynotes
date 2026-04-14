@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: log-collector
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: log-collector-daemon
+  template:
+    metadata:
+      labels:
+        app: log-collector-daemon
+    spec:
+      # nodeSelector:
+        # role: monitoring
+      containers:
+        - name: log-collector
+          image: nginx:latest
+          ports:
+            - containerPort: 80

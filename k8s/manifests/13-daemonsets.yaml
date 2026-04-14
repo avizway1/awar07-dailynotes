@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: node-monitor
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: node-monitor
+  template:
+    metadata:
+      labels:
+        app: node-monitor
+    spec:
+      tolerations:
+        - operator: Exists
+      containers:
+        - name: monitor
+          image: busybox:1.36
+          command:
+            - /bin/sh
+            - -c
+            - |
+              while true; do
+                echo "===== $(date) - Node Health ====="
+                echo "-- Disk Usage --"
+                df -h /host-root
+                echo "-- Memory --"
+                awk '/MemTotal|MemFree|MemAvailable/ {printf "%-15s %6.1f GB\n", $1, $2/1024/1024}' /proc/meminfo
+                echo "-- CPU Load --"
+                cat /proc/loadavg
+                echo ""
+                sleep 30
+              done
+          resources:
+            requests:
+              cpu: 50m
+              memory: 32Mi
+            limits:
+              cpu: 100m
+              memory: 64Mi
+          volumeMounts:
+            - name: host-root
+              mountPath: /host-root
+              readOnly: true
+      volumes:
+        - name: host-root
+          hostPath:
+            path: /
+
+#kubectl apply -f daemonset.yaml
+#kubectl get ds node-monitor
+#kubectl logs -l app=node-monitor --tail=20

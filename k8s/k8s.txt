@@ -239,20 +239,65 @@ To set a namespace as default namespace, we need to adjust the context..
 kubectl config set-context --current --namespace=dev-namespace
 
 
+----
+
+Daemonset : This ensures every node in the cluster will get exactly one copy of a pod.
+
+Primarily used for : Log collection, Monitoring agents, Network plugins or security agents (falco/Anti virus)
+
+kubectl label nodes <node-name> role=monitoring
 
 
+kubectl get pods -o wide		--> Shows on which node this pod is running.
+
+kubectl get nodes				--> Shows the nodes count
+kubectl get nodes -o wide		--> shows nodes detailed infromation
+
+kubectl get ds					--> gets the daemonsets from current namespace.
+
+kubectl describe ds log-collector
+
+eksctl scale nodegroup --cluster eskwithavinash --name mynodegroup --nodes 3
+
+----------
+
+stateless : A stateless app does not store any client/session data locally. Each req is independent and can be handles by any replica.
+
+--> No dependency on previous request.
+--> We use "Deployments" for stateless application.
+--> web servers, api services, friontend apps
+
+stateful application : It maintains state/data across requests. Each pod has a unique identity and persistent data.
+
+--> provides stable identity
+--> Requires persistent storage
+--> Order and uniqueness for the resources creation/deletion
+--> Managed by k8s "StatefulSets"
 
 
+PV : Persistent Volume : Storage resources in the cluster.
+PVC : Persistent Volume Claim : A request for storage by a pod.
+StorageClass : Defines how storage is dynamically created.
+
+CSI Driver : Container Storage Interface (CSI) driver : Plugin that lets k8s talk to storage services i.e; aws ebs
 
 
+Step 1 : 
+eksctl create iamserviceaccount --name ebs-csi-controller-sa  --namespace kube-system --cluster ekswithavinash --attach-policy-arn arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy --approve
+
+Step 2 : 
+
+eksctl create addon --name aws-ebs-csi-driver --cluster ekswithavinash --force
 
 
+Step 3 : Create a storageclass that can be provisoned dynamically.
 
-
-
-
-
-
+Provisioner : which csi driver creates the volume
+parameters.type: EBS volume type (gp2, gp3, io1)
+volumeBindingMode : Create volume in same AZ as Pod
+reclaimPolicy : 	
+	Delete: Remove PV when PVC is deleted. 
+	Retain : Keep PV when PVC is deleted. 
 
 
 
