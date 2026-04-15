@@ -267,9 +267,9 @@ stateless : A stateless app does not store any client/session data locally. Each
 --> We use "Deployments" for stateless application.
 --> web servers, api services, friontend apps
 
-stateful application : It maintains state/data across requests. Each pod has a unique identity and persistent data.
+Stateful application : It maintains state/data across requests. Each pod has a unique identity and persistent data.
 
---> provides stable identity
+--> provides stable identity (pod-name (starts from 0))
 --> Requires persistent storage
 --> Order and uniqueness for the resources creation/deletion
 --> Managed by k8s "StatefulSets"
@@ -298,6 +298,79 @@ volumeBindingMode : Create volume in same AZ as Pod
 reclaimPolicy : 	
 	Delete: Remove PV when PVC is deleted. 
 	Retain : Keep PV when PVC is deleted. 
+
+AccessModes: 
+RWO : ReadWriteOnce : One node can read/write. (gp2, gp3, io1) - EBS Supports
+RWX : ReadWriteMany : Multiple Nodes can read/write (EFS, NFS)
+ROX : ReadOnlyMany  : Multiple nodes can read only 
+
+Step 4 : StatefulSets required Headless service.
+
+headless servcie: We need to set ClusterIP as None to create a headless service. THis headless service gives each pod its own DNS name instead of a single service IP.
+** With headless service, each pod becomes individually addressable
+
+
+kubectl get statefulsets
+kubectl get sts
+kubectl get sts
+kubectl describe sts <name>
+
+kubectl get pvc
+kubectl get pv
+
+=============
+
+container
+pod	- smaller depllyable unit
+resplicaset - identical copies (upgrades)
+deployment - 
+clusterip - internal
+nodeport - node ip
+loadbalancer - aws lb
+headless - stateful / dns
+namespace - resource isolation
+daemonset - one pod per node
+statefulset - persistent storage
+resoucelimits - limit the cpu/memroy
+pvc / pv - to provide storage to pods
+storageclass - pick gp3
+
+--
+
+ConfigMaps : Stores non sensitive configuration : "AWS SYSTEMS MANAGER PARAMETER STORE"
+
+Imperative way to create a config map: 
+
+kubectl create configmap app-config --from-literal=APP_ENV=production --from-literal=APP_PORT=8080
+
+kubectl get cm
+kubectl get configmap
+kubectl describe cm app-config
+
+---
+
+Secrets : Stores sensitive data (Passwords / Tokens) : Not Encrypted, Its Encoded in base64. Can't rotate automatically. : AWS SECRETS MANAGER
+
+
+1. We can encode the values and use it or we can ask k8s to encode automatically 
+2. Or directly we can provide encoded info
+
+kubectl get secrets
+kubectl describe secret db-secret
+kubectl get secret db-secret -o jsonpath='{.data.DB_PASSWORD}' | base64 --decode
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
