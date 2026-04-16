@@ -1,0 +1,69 @@
+{{- /*
+Copyright Broadcom, Inc. All Rights Reserved.
+SPDX-License-Identifier: APACHE-2.0
+*/}}
+
+{{- if .Values.httpRoute.enabled }}
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: {{ template "common.names.fullname" . }}
+  namespace: {{ include "common.names.namespace" . | quote }}
+  {{- $labels := include "common.tplvalues.merge" (dict "values" (list .Values.httpRoute.labels .Values.commonLabels) "context" .) }}
+  labels: {{- include "common.labels.standard" (dict "customLabels" $labels "context" .) | nindent 4 }}
+  {{- if or .Values.httpRoute.annotations .Values.commonAnnotations }}
+  {{- $annotations := include "common.tplvalues.merge" (dict "values" (list .Values.httpRoute.annotations .Values.commonAnnotations) "context" .) }}
+  annotations: {{- include "common.tplvalues.render" (dict "value" $annotations "context" .) | nindent 4 }}
+  {{- end }}
+spec:
+  parentRefs:
+  {{- if .Values.httpRoute.parentRefs }}
+    {{- include "common.tplvalues.render" (dict "value" .Values.httpRoute.parentRefs "context" .) | nindent 4 }}
+  {{- else }}
+    - name: gateway
+      namespace: {{ include "common.names.namespace" . | quote }}
+  {{- end }}
+  hostnames: {{- include "common.tplvalues.render" (dict "value" .Values.httpRoute.hostnames "context" .) | nindent 4 }}
+  rules:
+    - backendRefs:
+        - name: {{ include "common.names.fullname" . }}
+          port: {{ ternary .Values.service.ports.https .Values.service.ports.http (and .Values.tls.enabled .Values.backendTLSPolicy.enabled) }}
+          weight: 1
+      {{- if .Values.httpRoute.matches }}
+      matches: {{- include "common.tplvalues.render" (dict "value" .Values.httpRoute.matches "context" .) | nindent 8 }}
+      {{- end }}
+      {{- if .Values.httpRoute.filters }}
+      filters: {{- include "common.tplvalues.render" (dict "value" .Values.httpRoute.filters "context" .) | nindent 8 }}
+      {{- end }}
+  {{- if .Values.httpRoute.extraRules }}
+    {{- include "common.tplvalues.render" (dict "value" .Values.httpRoute.extraRules "context" .) | nindent 4 }}
+  {{- end }}
+{{- if and .Values.tls.enabled .Values.backendTLSPolicy.enabled }}
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: BackendTLSPolicy
+metadata:
+  name: {{ template "common.names.fullname" . }}
+  namespace: {{ include "common.names.namespace" . | quote }}
+  {{- $labels := include "common.tplvalues.merge" (dict "values" (list .Values.backendTLSPolicy.labels .Values.commonLabels) "context" .) }}
+  labels: {{- include "common.labels.standard" (dict "customLabels" $labels "context" .) | nindent 4 }}
+  {{- if or .Values.backendTLSPolicy.annotations .Values.commonAnnotations }}
+  {{- $annotations := include "common.tplvalues.merge" (dict "values" (list .Values.backendTLSPolicy.annotations .Values.commonAnnotations) "context" .) }}
+  annotations: {{- include "common.tplvalues.render" (dict "value" $annotations "context" .) | nindent 4 }}
+  {{- end }}
+spec:
+  targetRefs:
+    - kind: Service
+      name: {{ include "common.names.fullname" . }}
+      group: ""
+  validation:
+    hostname: {{ default (printf "%s.%s.svc.%s" (include "common.names.fullname" .) (include "common.names.namespace" .) (default "cluster.local" .Values.clusterDomain)) .Values.backendTLSPolicy.hostname }}
+    {{- if .Values.backendTLSPolicy.subjectAltNames }}
+    subjectAltNames: {{- include "common.tplvalues.render" (dict "value" .Values.backendTLSPolicy.subjectAltNames "context" .) | nindent 6 }}
+    {{- end }}
+    caCertificateRefs:
+      - name: {{ printf "%s-tls" (include "common.names.fullname" .) }}
+        kind: Secret
+        group: ""
+{{- end }}
+{{- end }}

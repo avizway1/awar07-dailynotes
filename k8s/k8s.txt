@@ -360,6 +360,102 @@ kubectl describe secret db-secret
 kubectl get secret db-secret -o jsonpath='{.data.DB_PASSWORD}' | base64 --decode
 
 
+==========
+
+Helm is a package manager for K8s like dnf/yum for linux and npm for node.js
+
+--> Instead of writing and managing multiple YAML file manually, you use a helm chart - a prep packaged collection of k8s resources.
+
+
+chart : A package of k8s resources template
+
+Repository : A place where charts are stored (https://artifacthub.io/ / local)
+
+release : A running instance of a chart in our k8s cluster (v1 v2)
+
+Values : Configuration that customizes a chart at installation time.
+
+
+
+windows: 
+1. Install choco (https://chocolatey.org/)
+2. Install helm (choco install kubernetes-helm)
+
+Mac: brew install helm
+
+Linux: curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-4 | bash
+
+verify: helm version
+
+=======
+
+helm repo add bitnami https://charts.bitnami.com/bitnami		--> Adding bitnami repo to local
+
+helm repo list								--> shows installed repo list			
+
+helm repo update							--> update the repos
+
+helm search repo nginx						--> search for repo using cli
+
+
+
+helm pull bitnami/nginx	--untar
+
+* chart.yaml		--> Chart metadata
+* values.yaml		--> Default configuration file
+* templates			--> K8s YAML templates
+
+
+helm ls				--> List installed releases
+helm ls -A			--> list from all namespaces
+
+
+Make sure to login to docker "docker login"
+
+helm install my-nginx bitnami/nginx						--> Install binami managed helm chart in our k8s environment, and helm name it as "my-nginx"
+
+helm install my-nginx bitnami/nginx --version 23.0.0	--> Install with specific version
+
+helm upgrade my-nginx bitnami/nginx --set replicaCount=4	--> Imperatively/explicitly pass the value
+
+helm upgrade my-nginx bitnami/nginx -f values.yaml			--> Adjust the values file then deploy
+
+helm history my-nginx					--> Shows my-nginx app history
+
+helm rollback my-nginx 2				--> We can rollback to previous version
+
+helm uninstall my-nginx					--> 
+
+
+helm install my-nginx bitnami/nginx -f values.yaml --dry-run --debug
+
+helm install mynodeapp ./mynodeapp
+
+helm upgrade mynodeapp ./mynodeapp --description "Adjusting pod count to 3"
+
+
+helm show values mynodeapp 
+helm get values mynodeapp --revision 3
+
+
+=============
+
+K8s has 3 types of autoscalings : 
+
+HPA : Horizontal Pod Autoscaler : Based on CPU/memory load, pods will be added/removed
+VPA : Vertical Pod Autoscaler : Adjust the pod's CPU/memory. *WE DONT USE THIS, as pod restart required.
+Cluster Autoscaler : Adjust the node count : Add or remove ec2 instances in nodegroup.
+
+
+
+
+
+
+
+
+
+
+
 
 
 
