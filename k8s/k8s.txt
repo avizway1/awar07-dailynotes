@@ -447,22 +447,73 @@ VPA : Vertical Pod Autoscaler : Adjust the pod's CPU/memory. *WE DONT USE THIS, 
 Cluster Autoscaler : Adjust the node count : Add or remove ec2 instances in nodegroup.
 
 
+Create HPA : 
+
+kubectl autoscale deployment php-apache --cpu=60% --min=1 --max=10
 
 
+--
+
+To add load on the php-apche application, we are running a pod that can put load..
+
+kubectl run -i --tty load-generator --rm --image=busybox:1.28 --restart=Never -- /bin/sh -c "while sleep 0.01; do wget -q -O- http://php-apache; done"
 
 
+==========
+
+Cluster Auto Scaler: 
+
+Add below polocies to EKS Node's IAM roles:
+1. AmazonEKSComputePolicy
+2. AutoScalingFullAccess
+
+Navigate to AutoScaling group and adjust the max instance count.
 
 
+helm repo add autoscaler https://kubernetes.github.io/autoscaler
+
+helm repo update
+
+helm install cluster-autoscaler autoscaler/cluster-autoscaler \
+  --namespace kube-system \
+  --set autoDiscovery.clusterName=ekswithavinash \
+  --set awsRegion=ap-south-1 \
+  --set extraArgs.balance-similar-node-groups=true \
+  --set extraArgs.skip-nodes-with-system-pods=false
 
 
+autoDiscovery.clusterName=<cluster-name>: Enables automatic node discovery for the specified EKS cluster.
+awsRegion=<region-code>: Set your AWS region, e.g., ap-south-1 (Mumbai).
+balance-similar-node-groups=true: Distributes workloads evenly across node groups.
+skip-nodes-with-system-pods=false: Ensures system pods do not block node termination.
 
 
+kubectl get pods -n kube-system | grep cluster-autoscaler
 
 
+kubectl scale deployment php-apache --replicas=10
+
+========
+
+Goldilocks is an opensource tool to identify suitable workload configurations.
+
+helm repo add fairwinds-stable https://charts.fairwinds.com/stable
+
+kubectl create ns goldilocks
+
+helm install goldilocks --namespace goldilocks fairwinds-stable/goldilocks --version 10.3.0
 
 
+--> add a label to the namespaces you want to monitor using goldilocks.
 
+kubectl label ns default goldilocks.fairwinds.com/enabled=true
+kubectl label ns goldilocks goldilocks.fairwinds.com/enabled=true
 
+kubectl -n goldilocks port-forward svc/goldilocks-dashboard 8080:80
+
+---
+
+git clone https://github.com/kubernetes/autoscaler.git
 
 
 

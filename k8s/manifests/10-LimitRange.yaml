@@ -8,7 +8,7 @@ spec:
   - type: Container
     default:
       cpu: "1"              #Max CPU a container can utilise with in dev-namespace
-      memory: "1Gi"       #max memory a container can utilise with in dev-namespace
+      memory: "1Gi"         #max memory a container can utilise with in dev-namespace
     defaultRequest:
       cpu: "0.5m"           #Default requested CPU, if nothing defined in the manifest
       memory: "512Mi"       #Default requested memory, if nothing defined in the manifest
