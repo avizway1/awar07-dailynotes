@@ -1,0 +1,77 @@
+# ── STABLE Deployment (v1 — 9 replicas = 90% traffic) ──────────
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demo-stable
+spec:
+  replicas: 0
+  selector:
+    matchLabels:
+      app: demo-canary-app
+      track: stable
+  template:
+    metadata:
+      labels:
+        app: demo-canary-app
+        track: stable
+    spec:
+      containers:
+        - name: app
+          image: avizway/app:v1
+          ports:
+            - containerPort: 5000
+          env:
+            - name: NODE_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
+            - name: POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+---
+# ── CANARY Deployment (1 replica = 10% traffic) ────────────────
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demo-canary
+spec:
+  replicas: 6   # Start small — only 10% of traffic
+  selector:
+    matchLabels:
+      app: demo-canary-app
+      track: canary
+  template:
+    metadata:
+      labels:
+        app: demo-canary-app
+        track: canary
+    spec:
+      containers:
+        - name: app
+          image: avizway/app:canary
+          ports:
+            - containerPort: 5000
+          env:
+            - name: NODE_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
+            - name: POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+---
+# ── Service — routes to BOTH stable and canary ─────────────────
+# No "track" label here — K8s load-balances by pod count (9:1 ratio)
+apiVersion: v1
+kind: Service
+metadata:
+  name: demo-canary-svc
+spec:
+  type: LoadBalancer
+  selector:
+    app: demo-canary-app   # ← matches both stable AND canary pods
+  ports:
+    - port: 80
+      targetPort: 5000

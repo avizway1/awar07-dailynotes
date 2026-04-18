@@ -1,0 +1,77 @@
+# ── BLUE Deployment (current live) ─────────────────────────────
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demo-blue
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: demo-bg
+      version: blue
+  template:
+    metadata:
+      labels:
+        app: demo-bg
+        version: blue
+    spec:
+      containers:
+        - name: app
+          image: avizway/app:blue
+          ports:
+            - containerPort: 5000
+          env:
+            - name: NODE_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
+            - name: POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+---
+# ── GREEN Deployment (new version) ─────────────────────────────
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demo-green
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: demo-bg
+      version: green
+  template:
+    metadata:
+      labels:
+        app: demo-bg
+        version: green
+    spec:
+      containers:
+        - name: app
+          image: avizway/app:green
+          ports:
+            - containerPort: 5000
+          env:
+            - name: NODE_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
+            - name: POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+---
+# ── Service — THE SWITCH ────────────────────────────────────────
+apiVersion: v1
+kind: Service
+metadata:
+  name: demo-bg-svc
+spec:
+  type: LoadBalancer
+  selector:
+    app: demo-bg
+    version: blue     # ← This is the only thing you change to flip traffic
+  ports:
+    - port: 80
+      targetPort: 5000

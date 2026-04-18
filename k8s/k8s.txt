@@ -515,6 +515,75 @@ kubectl -n goldilocks port-forward svc/goldilocks-dashboard 8080:80
 
 git clone https://github.com/kubernetes/autoscaler.git
 
+========
+
+Rolling update : 
+
+Downtime: None
+Risk: low
+
+K8s picks 25% of our replica count as "maxSurge" and "maxUnavailable"
+
+
+kubectl rollout status deployment/demo-app  
+
+kubectl rollout history deployment/demo-app  
+
+kubectl rollout undo deployment/demo-app  
+
+kubectl rollout undo deployment/demo-app --to-revision=1
+
+kubectl rollout restart deployment/demo-app
+
+---
+
+Recreate Deployment : The entire ols version will be deleted, then new version starts. 
+
+brief downtime expected here.
+Medium: risk
+
+kubectl rollout history deployment/demo-app 
+
+kubectl rollout undo deployment/demo-recreate
+
+---
+
+Blue/Green Deployment
+
+Blue = Current live version
+Green = New version
+
+At a time, we need to have 2 environments up and running.. We can use service to switch to "blue / green"..
+for a period of time, you should have 2x pods/cost..
+
+---
+
+Canary Deployment : We can send small % of real user requests to canary version, then we can gradually increase it for everyone.
+
+Multiple deployments required.. 
+
+10 pods:
+9 pods -> v1 (stable)
+1 pod -> canary
+
+If canary works good.. then extend some portion..
+7 pods -> stable
+3 pods -> canary
+
+finally:
+0 pods -> v1
+10 pods -> canary
+
+
+
+
+
+
+
+
+
+
+
 
 
 
