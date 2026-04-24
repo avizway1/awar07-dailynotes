@@ -915,10 +915,16 @@ CW o11y agent helps with 4 types of logs.
 
 /aws/containerinsights/<cluster-name>/performance : perf of node and pod, container logs.. 
 
+====
 
----
 
+Prometheous : is an Open source monitoring system that collects and stores metrics.
 
+Data Store : TSDB / Time Series Database
+Query Languge : PromQL to query metrics
+Alerting : Alert manager (send alerts via email / slack / sendgrid)
+
+Prom work based on "pull mechanism". It connects to targets and pull the metrics from target.
 
 
 
