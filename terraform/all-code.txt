@@ -1,0 +1,278 @@
+provider "aws" {
+  region = "ap-south-1"
+}
+
+resource "aws_instance" "mywebserver" {
+  count         = 2
+  ami           = "ami-01b40e1bcccae197a"
+  instance_type = "t3.micro"
+
+  tags = {
+    Name = "MyWeb-Server"
+  }
+}
+
+----
+
+Adding count.index to add numberic incremental to the name
+
+----
+
+provider "aws" {
+  region = "ap-south-1"
+}
+
+resource "aws_instance" "mywebserver" {
+  count         = 2
+  ami           = "ami-01b40e1bcccae197a"
+  instance_type = "t3.micro"
+
+  tags = {
+    Name = "MyWeb-Server-${count.index}"
+  }
+}
+
+-----
+for_each
+-----
+
+provider "aws" {
+  region = "ap-south-1"
+}
+
+resource "aws_instance" "mywebserver" {
+
+  for_each = toset(["dev-server", "uat-server", "prd-server"])
+
+  ami           = "ami-01b40e1bcccae197a"
+  instance_type = "t3.micro"
+
+  tags = {
+    Name = each.key
+  }
+}
+
+---
+for_each extended with diff configurations
+---
+
+provider "aws" {
+  region = "ap-south-1"
+}
+
+locals {
+  webserver = {
+    dev-server = "t3.micro"
+    uat-server = "t3.small"
+    prd-server = "c7i-flex.large"
+  }
+}
+
+resource "aws_instance" "mywebserver" {
+
+  for_each = local.webserver
+
+  ami           = "ami-01b40e1bcccae197a"
+  instance_type = each.value
+
+  tags = {
+    Name = "${each.key}"
+  }
+}
+
+
+-----
+Depends on example- first s3 bucket creates, then only ec2 instance creates
+----
+
+provider "aws" {
+  region = "ap-south-1"
+}
+
+
+resource "aws_s3_bucket" "mys3bucket" {
+  bucket = "aws-aviz-terraform-demo-bucket"
+}
+
+resource "aws_instance" "mywebserver" {
+  ami           = "ami-01b40e1bcccae197a"
+  instance_type = "t3.micro"
+
+  tags = {
+    Name = "MyWeb-Server"
+  }
+  depends_on = [ aws_s3_bucket.mys3bucket ]
+}
+
+
+
+-----
+
+ignore_changes:
+---
+
+provider "aws" {
+  region = "ap-south-1"
+}
+
+resource "aws_instance" "mywebserver" {
+  ami           = "ami-07a00cf47dbbc844c"
+  instance_type = "t3.small"
+
+  tags = {
+    Name = "MyWeb-Server"
+  }
+
+  lifecycle {
+    ignore_changes = [instance_type, ami, tags]
+  }
+
+}
+
+
+
+----
+prevent_destroy
+----
+
+provider "aws" {
+  region = "ap-south-1"
+}
+
+resource "aws_instance" "mywebserver" {
+  ami           = "ami-07a00cf47dbbc844c"
+  instance_type = "t3.small"
+
+  tags = {
+    Name = "MyWeb-Server"
+  }
+
+  lifecycle {
+    prevent_destroy = true
+  }
+
+}
+
+
+----
+multiple providers option for multi region / multi cloud
+---
+
+provider "aws" {
+  region = "ap-south-1"
+}
+
+resource "aws_instance" "my-mumbai-server" {
+  ami           = "ami-07a00cf47dbbc844c"
+  instance_type = "t3.micro"
+
+  tags = {
+    Name = "My-mumbai-Web-Server"
+  }
+}
+
+provider "aws" {
+  region = "us-east-1"
+  alias  = "usa"
+}
+
+resource "aws_instance" "my-usa-server" {
+  provider      = aws.usa
+  ami           = "ami-0a59ec92177ec3fad"
+  instance_type = "t3.micro"
+
+  tags = {
+    Name = "My-usa-Web-Server"
+  }
+}
+
+----
+remote-exec for executing commands inside ec2 instance
+----
+
+
+
+provider "aws" {
+  region = "ap-south-1"
+}
+
+
+resource "aws_instance" "web-server" {
+  ami                    = "ami-01b40e1bcccae197a"
+  instance_type          = "t3.micro"
+  vpc_security_group_ids = ["sg-0d129e20790cd92c0"]
+  key_name               = "awar08-kp"
+
+  connection {
+    type        = "ssh"
+    user        = "ec2-user"
+    private_key = file("/Users/avizway/Desktop/keypairs/awar08-kp.pem")
+    host        = self.public_ip
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+      "sudo yum update -y",
+      "sudo yum install httpd -y",
+      "sudo systemctl start httpd",
+      "sudo systemctl enable httpd",
+      "echo '<h1>Welcome to AWS EC2 Web Server</h1>' | sudo tee /var/www/html/index.html"
+    ]
+  }
+
+  tags = {
+    Name = "remote-exec-web-server"
+  }
+
+}
+
+
+-----
+
+userdata - No need to use remote-exec to execute the commands, we can use aws cloud-int with userdata
+
+AWS Recommends this option
+----
+
+provider "aws" {
+  region = "ap-south-1"
+}
+
+
+resource "aws_instance" "web-server" {
+  ami                    = "ami-01b40e1bcccae197a"
+  instance_type          = "t3.micro"
+  vpc_security_group_ids = ["sg-0d129e20790cd92c0"]
+  key_name               = "awar08-kp"
+
+  user_data = file("${path.module}/userdata.txt")
+
+  tags = {
+    Name = "remote-exec-web-server"
+  }
+
+}
+
+----
+userdata.txt
+
+sudo yum update -y
+sudo yum install httpd -y
+sudo systemctl start httpd
+sudo systemctl enable httpd
+echo '<h1>Welcome to AWS EC2 Web Server</h1>' | sudo tee /var/www/html/index.html
+
+----
+
+
+
+
+
+
+
+
+
+
+
+
+

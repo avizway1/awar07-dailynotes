@@ -126,15 +126,47 @@ terraform target option :
 --> The target flag is used to apply or destroy specific resources of the configuration. 
 
 terraform destroy -target=aws_instance.mydbserver
+terraform destroy -target=aws_instance.mydbserver -target=aws_instance.mywebserver
 
 
 ----
 
 
+Meta Arguments in terraform : 
+
+Count : Helps to create multiple copies of the same resources.
+Instead of writing the same resources block mutliple times to cxreate 2 instances/multiple instances, we can write once and get multiple instances. 
+
+All resources creates with same name. We can use count.index to add unique name/id to the insatnces
+
+count.index startes from 0
+
+Web-Server-0
+Web-Server-1
+Web-Server-2
+
+----
+
+for_each: Similar to count, but creates instances based on a map or set of strings. This is often preferred over count because it uses stable keys instead of numeric indexes, making infrastructure more resilient to changes
+
+---
+
+depends_on: Manually specifies explicit dependencies between resources. While Terraform usually builds an implicit dependency graph, depends_on ensures a specific resource is created only after its dependency is ready.
+
+---
+
+lifecycle: A block that defines custom rules for resource management. Key rules include:
+
+create_before_destroy: Creates a new replacement resource before destroying the old one.
+
+prevent_destroy: Stops Terraform from destroying a critical resource.
+
+ignore_changes: Prevents Terraform from reverting manual changes made to specific attributes.
 
 
+----
 
-
+provider: Specifies which provider configuration to use for a particular resource. This is essential when working with multiple regions or multiple accounts for the same service
 
 
 
