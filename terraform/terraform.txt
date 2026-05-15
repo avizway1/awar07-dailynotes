@@ -326,6 +326,43 @@ terraform workspace delete prd
 terraform workspace delete uat
 terraform workspace delete dev
 
+===================
+
+Modules : if infra grows, we endup with copy and pasting the same resource blocks multiple times at multiple levels. 
+
+.
+├── main.tf
+├── modules
+│   ├── ec2
+│   │   ├── main.tf
+│   │   ├── outputs.tf
+│   │   └── variables.tf
+│   └── s3
+│       ├── main.tf
+│       ├── outputs.tf
+│       └── variables.tf
+└── variables.tf
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
