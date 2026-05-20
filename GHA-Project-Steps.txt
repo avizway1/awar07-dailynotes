@@ -1,0 +1,40 @@
+Step 1 — OIDC provider (once per AWS account)
+aws iam create-open-id-connect-provider \
+  --url https://token.actions.githubusercontent.com \
+  --client-id-list sts.amazonaws.com \
+  --thumbprint-list 6938fd4d98bab03faadb97b34396831e3780aea1
+  
+
+Step 2 — Edit trust policy — open github-actions-trust-policy.json and replace YOUR_GITHUB_USERNAME/YOUR_REPO_NAME with your actual repo.
+
+Step 3 — Create IAM role
+
+aws iam create-role \
+  --role-name GitHubActionsRole \
+  --assume-role-policy-document file://github-actions-trust-policy.json
+
+aws iam put-role-policy \
+  --role-name GitHubActionsRole \
+  --policy-name GitHubActionsPolicy \
+  --policy-document file://github-actions-iam-policy.json
+  
+  
+Step 4 — Grant EKS cluster access to the role
+
+aws eks create-access-entry \
+  --cluster-name ekswithavinash \
+  --principal-arn arn:aws:iam::655700896650:role/GitHubActionsRole \
+  --type STANDARD
+
+aws eks associate-access-policy \
+  --cluster-name ekswithavinash \
+  --principal-arn arn:aws:iam::655700896650:role/GitHubActionsRole \
+  --policy-arn arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy \
+  --access-scope type=cluster
+  
+Step 5 — Add GitHub Secrets (repo Settings → Secrets → Actions)
+
+Secret	Value
+AWS_ROLE_ARN	arn:aws:iam::655700896650:role/GitHubActionsRole
+AWS_ACCOUNT_ID	655700896650
+EKS_CLUSTER_NAME	your cluster name
