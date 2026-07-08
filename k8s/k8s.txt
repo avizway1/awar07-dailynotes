@@ -355,6 +355,9 @@ Secrets : Stores sensitive data (Passwords / Tokens) : Not Encrypted, Its Encode
 1. We can encode the values and use it or we can ask k8s to encode automatically 
 2. Or directly we can provide encoded info
 
+echo -n 'admin' | base64
+echo -n 'password123' | base64
+
 kubectl get secrets
 kubectl describe secret db-secret
 kubectl get secret db-secret -o jsonpath='{.data.DB_PASSWORD}' | base64 --decode
