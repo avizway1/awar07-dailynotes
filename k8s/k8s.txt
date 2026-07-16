@@ -890,6 +890,12 @@ kubectl auth can-i --list
 =====================
 
 
+Enable logs at EKS cluster level. 
+
+
+----
+
+
 Observability / o11y : 
 
 What is happening.?   -> Metrics (numbers, graphs)

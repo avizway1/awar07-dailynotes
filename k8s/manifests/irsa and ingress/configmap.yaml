@@ -96,9 +96,9 @@ data:
             <input type="email" name="email" placeholder="ravi@example.com" required/>
             <label>Batch</label>
             <select name="batch">
+              <option>Batch 10</option>
+              <option>Batch 9</option>
               <option>Batch 8</option>
-              <option>Batch 7</option>
-              <option>Batch 6</option>
             </select>
             <label>Course</label>
             <select name="course">
